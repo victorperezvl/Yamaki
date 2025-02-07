@@ -1,20 +1,25 @@
 const express = require ("express");
+const morgan = require("morgan");
 
+//Initial configuration
 const app = express();
 app.set('port', 4000);
 app.listen(app.get('port'));
 
+//Middlewares
+app.use(morgan("dev"));
 
+
+//Routes
 app.get('/', (req, res) => {
 
-    res.send('prueba nodemon');
+    res.send('EN DESARROLLO...');
     
-
 });
 
-console.log('nodemon instalado correctamente');
-console.log('segunda prueba');
-console.log('tercer log');
+console.log('probando');
+
+
 
 
 
