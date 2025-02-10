@@ -1,5 +1,6 @@
 const express = require ("express");
 const morgan = require("morgan");
+const database = require ("./database.js")
 
 //Initial configuration
 const app = express();
