@@ -1,7 +1,6 @@
 const express = require ('express');
 const morgan = require('morgan');
 const routes = require('./routes.js');
-const database = require ('./database.js');
 
 //Initial configuration
 const app = express();
@@ -12,7 +11,7 @@ app.listen(app.get('port'));
 app.use(morgan('dev'));
 
 //Routes
-app.use(routes);
+app.use('/api', routes);
 
 
 console.log('probando');
