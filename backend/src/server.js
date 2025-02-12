@@ -1,7 +1,12 @@
 const express = require('express');
+const cors = require('cors');
+const dotenv = require('dotenv')
 const morgan = require('morgan');
 const routes = require('./routes.js');
 const path = require('path');
+
+//Charge env
+dotenv.config();
 
 //Initial configuration
 const app = express();
@@ -13,6 +18,8 @@ app.use(express.static(path.join(__dirname,'../../frontend')));
 
 //Middlewares
 app.use(morgan('dev'));
+app.use(express.json());
+app.use(cors());
 
 //Routes
 app.use('/api', routes);
