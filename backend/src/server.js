@@ -5,7 +5,7 @@ const path = require('path');
 
 //Initial configuration
 const app = express();
-app.set('port', 4000);
+app.set('port', process.env.PORT);
 app.listen(app.get('port'));
 
 // Statics files
@@ -21,7 +21,7 @@ app.get('/',(req, res) => {
 });
 
 
-console.log('probando');
+console.log('server running on port 4000');
 
 
 
