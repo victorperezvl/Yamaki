@@ -95,6 +95,20 @@ const authController = {
     //Logout
     logout: async (req, res) => {
 
+        logout: async (req, res) => {
+            try {
+                res.clearCookie("token", {
+                    httpOnly: true,
+                    secure: process.env.NODE_ENV === "production",
+                    sameSite: "Strict"
+                });
+        
+                return res.status(200).json({ message: "Logout exitoso" });
+            } catch (error) {
+                console.log("Error en el logout", error);
+                return res.status(500).json({ error: "Error al cerrar sesión" });
+            }
+        }        
 
     }
 }
