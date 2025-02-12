@@ -16,7 +16,7 @@ const authController = {
                 return res.status(400).json({ error: 'Campos sin rellenar' });
             }
 
-            const salt = await bcrypt.salt(10);
+            const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(password, salt);
 
             const [result] = await db.execute(
