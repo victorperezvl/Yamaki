@@ -5,15 +5,14 @@ dotenv.config();
 const pool = mysql.createPool({
 
     host:process.env.DB_HOST,
-    database:process.env.DATABASE,
+    database:process.env.DATABASE_TEST,
     user:process.env.DB_USER,
     password:process.env.DB_PASSWORD,
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
 
-});
+}).promise();
 
-const promisePool = async() => pool.promise();
 
-module.exports = promisePool;
+module.exports = pool;

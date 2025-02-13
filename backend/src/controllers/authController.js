@@ -39,7 +39,7 @@ const authController = {
 
             return res.status(200).json({
                 message: 'Login exitoso',
-                user: { id: user.id, name: user.name, email: user.email }
+                user: { id: user.id, name: user.name, email: user.email, token }
             });
                           
         }
@@ -74,7 +74,7 @@ const authController = {
             const photoURL = photo || null;
 
             const [result] = await db.execute(
-                'INSERT INTO users (name, email, password, phone, instagram, photo_URL) VALUES (?, ?, ?, ?, ?, ?)',
+                'INSERT INTO users (name, email, password, phone, instagram, photo_url) VALUES (?, ?, ?, ?, ?, ?)',
                 [userName, email, hashedPassword, phone, instagram, photoURL]
 
             )
@@ -95,20 +95,20 @@ const authController = {
     //Logout
     logout: async (req, res) => {
 
-        logout: async (req, res) => {
-            try {
-                res.clearCookie("token", {
-                    httpOnly: true,
-                    secure: process.env.NODE_ENV === "production",
-                    sameSite: "Strict"
-                });
-        
-                return res.status(200).json({ message: "Logout exitoso" });
-            } catch (error) {
-                console.log("Error en el logout", error);
-                return res.status(500).json({ error: "Error al cerrar sesión" });
-            }
-        }        
+       
+        try {
+            res.clearCookie("token", {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "Strict"
+            });
+    
+            return res.status(200).json({ message: "Logout exitoso" });
+        } catch (error) {
+            console.log("Error en el logout", error);
+            return res.status(500).json({ error: "Error al cerrar sesión" });
+        }
+                
 
     }
 }
