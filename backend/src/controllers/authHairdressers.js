@@ -1,34 +1,37 @@
-const bcrypt = require ('bcrypt');
 const db = require ('../database.js');
+const bcrypt = require ('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const authController = {
+const authHairdressers = {
+
     //Login
     login: async (req, res) => {
-
         const {email, password} = req.body;
 
         try {
             if (!email || !password) {
-                return res.status(400).json({error: 'Email y contraseña son obligatorios'})
+                return res.status(400).json({error: 'Email o contraseña son obligatorios'});
+
             }
+
             const [rows] = await db.execute(
-                'SELECT id, name, email, password FROM users WHERE email = ?', 
-                [email] 
+                'SELECT id, name, email, password FROM hairdressers WHERE email = ?',
+                [email]                
             );
 
-            if (rows.length === 0){
-                return res.status(401).json({error: 'Credenciales incorrectas'})
-            }
-            
-            const user = rows[0];
+            if ( rows.length === 0) {
+                return res.status(400).json({error: 'Credenciales incorrectas'});
 
-            const isMatch = await bcrypt.compare(password, user.password);
+            }
+
+            const hairdresser = rows[0];
+
+            const isMatch = await bcrypt.compare(password, hairdresser.password);
             if (!isMatch) {
-                return res.status(401).json({ error: 'Credenciales incorrectas' });
+                return res.status(400).json({error: 'Credenciales incorrectas'});
             }
 
-            const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '7d' });
+            const token = jwt.sign ({ id: hairdresser.id, email: hairdresser.email }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
             res.cookie('token', token, {
                 httpOnly: true,
@@ -39,33 +42,34 @@ const authController = {
 
             return res.status(200).json({
                 message: 'Login exitoso',
-                user: { id: user.id, name: user.name, email: user.email, token }
+                hairdresser: { id: hairdresser.id, name: hairdresser.name, email: hairdresser.email, token }
             });
-                          
+
         }
+
         catch (error){
             console.log('Error en el login', error);
             return res.status(500).json({error: 'Error'})
-        }
+        };
 
     },
 
     //Register
     register: async (req, res) => {
 
-        const {userName, email, password, phone, instagram, photo} = req.body;
+        const {hairdresserName, email, password, phone, photo} = req.body;
 
         try {
            
-            if (!userName || !email || !password || !phone) {
+            if (!hairdresserName || !email || !password || !phone) {
                 return res.status(400).json({ error: 'Campos sin rellenar' });
             }
 
-            const [rows] = await db.execute('SELECT EXISTS (SELECT 1 FROM users WHERE email = ?) AS userExists',
+            const [rows] = await db.execute('SELECT EXISTS (SELECT 1 FROM hairdressers WHERE email = ?) AS hairdresserExists',
                 [email]
             );    
 
-            if (rows[0].userExists) {
+            if (rows[0].hairdresserExists) {
                 return res.status(400).json({ error: 'Este email ya existe' });
             }
 
@@ -74,12 +78,12 @@ const authController = {
             const photoURL = photo || null;
 
             const [result] = await db.execute(
-                'INSERT INTO users (name, email, password, phone, instagram, photo_url) VALUES (?, ?, ?, ?, ?, ?)',
-                [userName, email, hashedPassword, phone, instagram, photoURL]
+                'INSERT INTO hairdressers (name, email, password, phone, photo_url) VALUES (?, ?, ?, ?, ?)',
+                [hairdresserName, email, hashedPassword, phone, photoURL]
 
             )
 
-            return res.status(201).json({message: 'Usuario registrado correctamente'})
+            return res.status(201).json({message: 'Peluquero registrado correctamente'})
 
 
         }
@@ -112,11 +116,8 @@ const authController = {
                 
 
     }
+
 }
 
-module.exports = authController;
 
-
-
-
-
+module.exports = authHairdressers;
