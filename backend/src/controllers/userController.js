@@ -81,10 +81,37 @@ const userController = {
         } finally {
             connection.release();
         }
-    }
+    },
     
     
+    //Cancel appointment
+    cancelAppointment: async (req, res) => {
+        const {id_appointment} = req.body;
+        const user_id = req.user.id;
 
+        try{
+
+            const [appointment] = await db.execute(
+                'SELECT * FROM appointments WHERE id = ? AND user_id = ?',
+                [id_appointment, user_id]
+            );
+
+            if (appointment.length === 0) {
+                return res.status(403).json({message: 'No puedes cancelar esta cita'})
+            }
+
+            await db.execute(
+                'DELETE FROM appointments WHERE id=?',
+                [id_appointment]
+            )
+
+            res.json({message: 'Cita cancelada con éxito'});
+
+        }catch (error){
+            return res.status(500).json({message: 'No se ha podido cancelar la cita'});
+        }
+        
+    }
 
 
 
