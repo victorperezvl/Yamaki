@@ -19,6 +19,7 @@ router.post('/hairdresser/logout', authHairdresser.logout);
 router.post('/appointments/logged', middlewares, userController.bookLogged);
 router.post('/appointments', userController.bookGuest);
 router.post('/appointments/logged/cancel', middlewares, userController.cancelAppointment);
+router.get('/appointments/see', middlewares, userController.seeAppointment);
 
 
 

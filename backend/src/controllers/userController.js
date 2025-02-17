@@ -86,6 +86,7 @@ const userController = {
     
     //Cancel appointment
     cancelAppointment: async (req, res) => {
+        
         const {id_appointment} = req.body;
         const user_id = req.user.id;
 
@@ -111,9 +112,33 @@ const userController = {
             return res.status(500).json({message: 'No se ha podido cancelar la cita'});
         }
         
+    },
+
+    //See pending appointments
+    seeAppointment: async (req, res) => {
+
+        const user_id = req.user.id;
+
+        try{
+
+            const [result] = await db.execute(
+                'SELECT * FROM appointments WHERE user_id = ? ORDER BY appointment_date, appointment_time',
+                [user_id]
+            )
+    
+            if (result.length === 0) {
+                return res.status(404).json({message: 'No hay citas pendientes'});
+            }
+
+            res.json(result);
+
+        }catch (error){
+            return res.status(500).json({message: 'No se han podido mostrar las citas'});
+        }
+        
+
     }
-
-
+    
 
 
 }
