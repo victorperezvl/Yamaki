@@ -26,5 +26,8 @@ router.get('/appointments/see', authMiddlewares.authenticateUser, userController
 router.post('/hairdresser/confirm', authMiddlewares.authenticateHairdresser, hairdresserController.confirmAppointment);
 router.post('/hairdresser/cancel', authMiddlewares.authenticateHairdresser, hairdresserController.cancelAppointment);
 router.post('/hairdresser/seeAppointments', authMiddlewares.authenticateHairdresser, hairdresserController.seeAppointments);
+router.post('/hairdresser/seeInformationUsers', authMiddlewares.authenticateHairdresser, hairdresserController.seeInformationUsers);
+router.post('/hairdresser/setDescription', authMiddlewares.authenticateHairdresser, hairdresserController.setDescription);
+
 
 module.exports = router;

@@ -71,6 +71,7 @@ const hairdresserController = {
 
     }, 
 
+    //See appointments of the day
     seeAppointments: async (req, res) => {
 
         const {date} = req.body;
@@ -103,7 +104,71 @@ const hairdresserController = {
             console.log(error);
             return res.status(500).json({message: "No se han podido mostrar las citas"});
         }
+    }, 
+
+    //See information about users with booked appointments
+    seeInformationUsers: async (req, res) => {
+
+        const {id_appointment} = req.body;
+
+        try {
+            const [result] = await db.execute(
+                `SELECT 
+                CASE 
+                    WHEN a.user_id IS NOT NULL THEN u.name
+                    ELSE a.guest_name 
+                END AS user_type,
+                COALESCE(u.name, a.guest_name) AS name,
+                COALESCE(u.email, a.guest_email) AS email,
+                COALESCE(u.phone, a.guest_phone) AS phone,
+                u.description,
+                u.instagram
+                FROM appointments a
+                LEFT JOIN users u ON a.user_id = u.id
+                WHERE a.id = ?`,
+                [id_appointment]
+
+            )
+
+            if (result.length === 0) {
+                return res.status(403).json({message: 'No se ha encontrado el cliente'})
+            }
+
+            res.json(result);
+
+
+        } catch (error) {
+            res.status(500).json({message: 'No se han podido consultar los datos del cliente'})
+        }
+
+    },
+
+    //Add user description provided by the hairdresser
+    setDescription: async (req, res) => {
+
+        const {id_user, description} = req.body;
+
+        try {
+            const [result] = await db.execute(
+                'SELECT * FROM users WHERE id = ?',
+                [id_user]
+            )
+
+            if (result.length === 0) {
+                return res.status(403).json({message: 'No se ha encontrado el usuario'})
+            }
+
+            await db.execute (
+                'UPDATE users SET description = ? WHERE id = ?',
+                [description, id_user]
+            )
+
+            res.json({message: 'Descripción añadida'})
+        } catch (error) {
+            return res.status(500).json({message: 'No se ha podido añadir la descripción'})
+        }
     }
+
 
 
 
