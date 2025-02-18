@@ -90,7 +90,7 @@ const userController = {
         const {id_appointment} = req.body;
         const user_id = req.user.id;
 
-        try{
+        try {
 
             const [appointment] = await db.execute(
                 'SELECT * FROM appointments WHERE id = ? AND user_id = ?',
