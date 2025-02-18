@@ -30,7 +30,7 @@ router.post('/hairdresser/seeInformationUsers', authMiddlewares.authenticateHair
 router.post('/hairdresser/setDescription', authMiddlewares.authenticateHairdresser, hairdresserController.setDescription);
 router.post('/hairdresser/searchUsers', authMiddlewares.authenticateHairdresser, hairdresserController.searchUsers);
 router.post('/hairdresser/informationRegisteredUsers', authMiddlewares.authenticateHairdresser, hairdresserController.informationRegisteredUsers);
-router.post('/hairdresser/usePoints', authMiddlewares.authenticateHairdresser, hairdresserController.u);
+router.post('/hairdresser/usePoints', authMiddlewares.authenticateHairdresser, hairdresserController.usePoints);
 
 
 
