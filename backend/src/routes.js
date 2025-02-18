@@ -28,6 +28,12 @@ router.post('/hairdresser/cancel', authMiddlewares.authenticateHairdresser, hair
 router.post('/hairdresser/seeAppointments', authMiddlewares.authenticateHairdresser, hairdresserController.seeAppointments);
 router.post('/hairdresser/seeInformationUsers', authMiddlewares.authenticateHairdresser, hairdresserController.seeInformationUsers);
 router.post('/hairdresser/setDescription', authMiddlewares.authenticateHairdresser, hairdresserController.setDescription);
+router.post('/hairdresser/searchUsers', authMiddlewares.authenticateHairdresser, hairdresserController.searchUsers);
+router.post('/hairdresser/informationRegisteredUsers', authMiddlewares.authenticateHairdresser, hairdresserController.informationRegisteredUsers);
+router.post('/hairdresser/usePoints', authMiddlewares.authenticateHairdresser, hairdresserController.u);
+
+
+
 
 
 module.exports = router;

@@ -122,7 +122,9 @@ const hairdresserController = {
                 COALESCE(u.email, a.guest_email) AS email,
                 COALESCE(u.phone, a.guest_phone) AS phone,
                 u.description,
-                u.instagram
+                u.instagram,
+                u.points,
+                u.photo_url
                 FROM appointments a
                 LEFT JOIN users u ON a.user_id = u.id
                 WHERE a.id = ?`,
@@ -167,8 +169,106 @@ const hairdresserController = {
         } catch (error) {
             return res.status(500).json({message: 'No se ha podido añadir la descripción'})
         }
-    }
+    },
 
+    //Search users by name, instagram, email or phone
+    searchUsers: async (req, res) => {
+        const {searchQuery} = req.body;
+    
+        if (!searchQuery) {
+            return res.status(400).json({message: 'Debe proporcionar un criterio de búsqueda'});
+        }
+    
+        try {
+            const [results] = await db.execute(
+                `SELECT 
+                    id,
+                    name, 
+                    phone, 
+                    COALESCE(photo_url) AS photo_url 
+                FROM users 
+                WHERE name LIKE ? 
+                   OR email LIKE ? 
+                   OR phone LIKE ? 
+                   OR instagram LIKE ? 
+                LIMIT 10`, 
+                [`%${searchQuery}%`, `%${searchQuery}%`, `%${searchQuery}%`, `%${searchQuery}%`]
+            );
+    
+            if (results.length === 0) {
+                return res.status(404).json({message: 'No se encontraron usuarios'});
+            }
+    
+            res.json(results);
+        } catch (error) {
+            console.error('Error al buscar usuarios:', error);
+            res.status(500).json({ message: 'Error al realizar la búsqueda' });
+        }
+    },
+
+    //See information registered users 
+    informationRegisteredUsers: async (req, res) => {
+        const {id_user} = req.body;
+
+        try {
+            const [result] = await db.execute (
+                'SELECT name, email, phone, description, instagram, points, photo_url FROM users WHERE id = ?',
+                [id_user]
+            )
+
+            if (result.length === 0) {
+                return res.status(403).json({message: 'Usuario no encontrado'})
+            }
+
+            res.json(result);
+
+        } catch (error) {
+            return res.status(500).json({message: 'No se ha podido mostrar la información del usuario'})
+        }
+
+    },
+
+    //Use user points 
+    usePoints: async (req, res) => {
+        const {id_appointment} = req.body;
+    
+        try {
+            const [result] = await db.execute(
+                `SELECT u.id, u.points 
+                 FROM users u
+                 JOIN appointments a ON u.id = a.user_id
+                 WHERE a.id = ? AND a.user_id IS NOT NULL`, 
+                [id_appointment]
+            );
+    
+            if (result.length === 0) {
+                return res.status(403).json({ message: 'Cita no encontrada o usuario no registrado' });
+            }
+    
+            if (result[0].points < 100) {
+                return res.status(400).json({ message: 'No hay puntos suficientes' });
+            }
+    
+            const [rows] = await db.execute(
+                `UPDATE users u
+                 JOIN appointments a ON u.id = a.user_id
+                 SET u.points = points - 100, a.status = "confirmed"
+                 WHERE a.id = ? AND a.user_id IS NOT NULL`,
+                [id_appointment]
+            );
+    
+            if (rows.affectedRows === 0) {
+                return res.status(400).json({ message: 'Error al procesar la operación' });
+            }
+    
+            res.json({ message: 'Puntos utilizados correctamente y cita confirmada' });
+    
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: 'No se han podido utilizar los puntos' });
+        }
+    }
+    
 
 
 
