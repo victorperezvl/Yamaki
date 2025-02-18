@@ -31,7 +31,7 @@ const authHairdressers = {
                 return res.status(400).json({error: 'Credenciales incorrectas'});
             }
 
-            const token = jwt.sign ({ id: hairdresser.id, email: hairdresser.email }, process.env.JWT_SECRET, { expiresIn: '7d' });
+            const token = jwt.sign ({ id: hairdresser.id,  email: hairdresser.email, role: "hairdresser"}, process.env.JWT_SECRET, { expiresIn: '7d' });
 
             res.cookie('token', token, {
                 httpOnly: true,

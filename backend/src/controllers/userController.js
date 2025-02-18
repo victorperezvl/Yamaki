@@ -45,7 +45,7 @@ const userController = {
     //Book appointment for guest users
     bookGuest: async (req, res) => {
 
-        const {email, phone, hairdresser_id, date, time} = req.body;
+        const {email, phone, name, hairdresser_id, date, time} = req.body;
         const connection = await db.getConnection();
 
         try {
@@ -67,8 +67,8 @@ const userController = {
             }
 
             await connection.execute(
-                'INSERT INTO appointments (guest_email, guest_phone, hairdresser_id, appointment_date, appointment_time, status) VALUES (?, ?, ?, ?, ?, "pending")',
-                [email, phone, hairdresser_id, date, time]          
+                'INSERT INTO appointments (guest_email, guest_phone, guest_name, hairdresser_id, appointment_date, appointment_time, status) VALUES (?, ?, ?, ?, ?, ?, "pending")',
+                [email, phone, name, hairdresser_id, date, time]          
             );
 
             await connection.commit();
@@ -122,7 +122,7 @@ const userController = {
         try{
 
             const [result] = await db.execute(
-                'SELECT * FROM appointments WHERE user_id = ? ORDER BY appointment_date, appointment_time',
+                'SELECT * FROM appointments WHERE user_id = ? AND status = "pending" ORDER BY appointment_date, appointment_time',
                 [user_id]
             )
     

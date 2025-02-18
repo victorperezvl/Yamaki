@@ -12,6 +12,11 @@ const authMiddlewares = {
 
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+            if (decoded.role !== "client") {
+                return res.status(403).json({ message: "Acceso restringido a clientes." });
+            }
+
             req.user = decoded; 
             next();
         } catch (error) {
@@ -29,6 +34,11 @@ const authMiddlewares = {
 
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+            if (decoded.role !== "hairdresser") {
+                return res.status(403).json({ message: "Acceso restringido a peluqueros." });
+            }
+
             req.hairdresser = decoded;
             next();
         } catch (error) {

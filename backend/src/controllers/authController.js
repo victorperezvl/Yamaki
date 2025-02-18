@@ -28,7 +28,7 @@ const authController = {
                 return res.status(401).json({ error: 'Credenciales incorrectas' });
             }
 
-            const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '7d' });
+            const token = jwt.sign({ id: user.id, email: user.email, role: "client" }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
             res.cookie('token', token, {
                 httpOnly: true,

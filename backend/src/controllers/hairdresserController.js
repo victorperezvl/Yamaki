@@ -39,6 +39,70 @@ const hairdresserController = {
             res.status(500).json({message: 'No se ha podido confirmar la cita'});
         }
 
+    },
+
+    //Cancel appointment
+    cancelAppointment: async (req, res) => {
+
+        const {id_appointment} = req.body;
+
+        try {
+
+            const [result] = await db.execute(
+                'SELECT * FROM appointments WHERE id = ?',
+                [id_appointment]
+            )
+
+            if (result.length === 0) {
+                return res.status(403).json({message: 'Cita no encontrada'})
+            }
+
+            await db.execute(
+                'DELETE FROM appointments WHERE id = ?',
+                [id_appointment]
+            )
+
+            res.json({message: 'Cita cancelada con éxito'});
+
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({message: 'No se ha podido cancelar la cita'});
+        }
+
+    }, 
+
+    seeAppointments: async (req, res) => {
+
+        const {date} = req.body;
+
+        try {
+            const [result] = await db.execute(
+                `SELECT 
+                a.id, 
+                COALESCE(u.name, a.guest_name) AS client_name, 
+                h.name AS hairdresser_name, 
+                a.appointment_time, 
+                a.status, 
+                a.guest_email, 
+                a.guest_phone
+                FROM appointments a
+                LEFT JOIN users u ON a.user_id = u.id
+                JOIN hairdressers h ON a.hairdresser_id = h.id
+                WHERE a.appointment_date = ?
+                ORDER BY h.id, a.appointment_time`,
+                [date]
+            )
+
+            if (result.length === 0) {
+                return res.status(403).json({message: "No hay citas en este día"})
+            }
+
+            res.json(result);
+
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({message: "No se han podido mostrar las citas"});
+        }
     }
 
 

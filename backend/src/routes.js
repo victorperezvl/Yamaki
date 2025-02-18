@@ -24,6 +24,7 @@ router.get('/appointments/see', authMiddlewares.authenticateUser, userController
 
 //Routes appointments hairdressers
 router.post('/hairdresser/confirm', authMiddlewares.authenticateHairdresser, hairdresserController.confirmAppointment);
-
+router.post('/hairdresser/cancel', authMiddlewares.authenticateHairdresser, hairdresserController.cancelAppointment);
+router.post('/hairdresser/seeAppointments', authMiddlewares.authenticateHairdresser, hairdresserController.seeAppointments);
 
 module.exports = router;
