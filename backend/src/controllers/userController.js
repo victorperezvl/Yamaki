@@ -136,8 +136,33 @@ const userController = {
         }catch (error){
             return res.status(500).json({message: 'No se han podido mostrar las citas'});
         }
-        
+      
 
+    },
+
+    //See history appointments 
+    appointmentsHistory: async (req, res) => {
+
+        const user_id = req.user.id;
+        
+        try {
+
+            const [result] = await db.execute(
+                'SELECT * FROM appointments WHERE user_id = ? AND status = "confirmed"',
+                [user_id]
+            )
+
+            if (result.length === 0) {
+                return res.json({messagge: 'No hay citas que mostrar'})
+            }
+
+            res.json(result);
+
+        } catch (error) {
+            console.log(error)
+            return res.status(500).json({message: 'No se ha podido consultar el historial de citas'})
+        }
+        
     }
     
 

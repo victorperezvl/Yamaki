@@ -267,6 +267,39 @@ const hairdresserController = {
             console.error(error);
             return res.status(500).json({ message: 'No se han podido utilizar los puntos' });
         }
+    },
+
+    //See appointments history
+    appointmentsHistory: async (req, res) => {
+        const id_user = req.params.id;
+
+        try {
+
+            const [result] = await db.execute(
+                'SELECT * FROM users WHERE id = ?',
+                [id_user]
+            )
+
+            if (result.length === 0) {
+                return res.status(403).json({messagge: 'Usuario no encontrado'})
+            }
+
+            const [appointments] = await db.execute(
+                'SELECT * FROM appointments WHERE user_id = ? AND status = "confirmed"',
+                [id_user]
+            )
+
+            if (appointments.length === 0) {
+                return res.json({messagge: 'No hay citas que mostrar'})
+            }
+
+            res.json(appointments);
+
+        } catch (error) {
+            console.log(error)
+            return res.status(500).json({message: 'No se ha podido consultar el historial de citas'})
+        }
+        
     }
     
 

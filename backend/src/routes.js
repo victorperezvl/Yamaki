@@ -21,6 +21,7 @@ router.post('/appointments', authMiddlewares.authenticateUser, userController.bo
 router.post('/appointments/guest', userController.bookGuest);
 router.delete('/appointments/:id', authMiddlewares.authenticateUser, userController.cancelAppointment);
 router.get('/appointments', authMiddlewares.authenticateUser, userController.seeAppointment);
+router.get('/appointments/history', authMiddlewares.authenticateUser, userController.appointmentsHistory);
 
 //Routes appointments hairdressers
 router.patch('/hairdresser/appointments', authMiddlewares.authenticateHairdresser, hairdresserController.confirmAppointment);
@@ -31,7 +32,7 @@ router.patch('/hairdresser/description', authMiddlewares.authenticateHairdresser
 router.get('/hairdresser/users', authMiddlewares.authenticateHairdresser, hairdresserController.searchUsers);
 router.get('/hairdresser/users/:id', authMiddlewares.authenticateHairdresser, hairdresserController.informationRegisteredUsers);
 router.patch('/hairdresser/appointments/points', authMiddlewares.authenticateHairdresser, hairdresserController.usePoints);
-
+router.get('/hairdresser/appointments/history/:id', authMiddlewares.authenticateHairdresser, hairdresserController.appointmentsHistory);
 
 
 
