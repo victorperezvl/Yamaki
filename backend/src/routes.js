@@ -17,20 +17,20 @@ router.post('/hairdresser/register', authHairdresser.register);
 router.post('/hairdresser/logout', authHairdresser.logout);
 
 //Routes appointments users
-router.post('/appointments/logged', authMiddlewares.authenticateUser, userController.bookLogged);
-router.post('/appointments', userController.bookGuest);
-router.post('/appointments/logged/cancel', authMiddlewares.authenticateUser, userController.cancelAppointment);
-router.get('/appointments/see', authMiddlewares.authenticateUser, userController.seeAppointment);
+router.post('/appointments', authMiddlewares.authenticateUser, userController.bookLogged);
+router.post('/appointments/guest', userController.bookGuest);
+router.delete('/appointments/:id', authMiddlewares.authenticateUser, userController.cancelAppointment);
+router.get('/appointments', authMiddlewares.authenticateUser, userController.seeAppointment);
 
 //Routes appointments hairdressers
-router.post('/hairdresser/confirm', authMiddlewares.authenticateHairdresser, hairdresserController.confirmAppointment);
-router.post('/hairdresser/cancel', authMiddlewares.authenticateHairdresser, hairdresserController.cancelAppointment);
-router.post('/hairdresser/seeAppointments', authMiddlewares.authenticateHairdresser, hairdresserController.seeAppointments);
-router.post('/hairdresser/seeInformationUsers', authMiddlewares.authenticateHairdresser, hairdresserController.seeInformationUsers);
-router.post('/hairdresser/setDescription', authMiddlewares.authenticateHairdresser, hairdresserController.setDescription);
-router.post('/hairdresser/searchUsers', authMiddlewares.authenticateHairdresser, hairdresserController.searchUsers);
-router.post('/hairdresser/informationRegisteredUsers', authMiddlewares.authenticateHairdresser, hairdresserController.informationRegisteredUsers);
-router.post('/hairdresser/usePoints', authMiddlewares.authenticateHairdresser, hairdresserController.usePoints);
+router.patch('/hairdresser/appointments', authMiddlewares.authenticateHairdresser, hairdresserController.confirmAppointment);
+router.delete('/hairdresser/appointments/:id', authMiddlewares.authenticateHairdresser, hairdresserController.cancelAppointment);
+router.get('/hairdresser/appointments/:date', authMiddlewares.authenticateHairdresser, hairdresserController.seeAppointments);
+router.get('/hairdresser/appointments/info/:id', authMiddlewares.authenticateHairdresser, hairdresserController.seeInformationUsers);
+router.patch('/hairdresser/description', authMiddlewares.authenticateHairdresser, hairdresserController.setDescription);
+router.get('/hairdresser/users', authMiddlewares.authenticateHairdresser, hairdresserController.searchUsers);
+router.get('/hairdresser/users/:id', authMiddlewares.authenticateHairdresser, hairdresserController.informationRegisteredUsers);
+router.patch('/hairdresser/appointments/points', authMiddlewares.authenticateHairdresser, hairdresserController.usePoints);
 
 
 

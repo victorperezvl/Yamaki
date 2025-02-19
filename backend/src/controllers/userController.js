@@ -87,7 +87,7 @@ const userController = {
     //Cancel appointment
     cancelAppointment: async (req, res) => {
         
-        const {id_appointment} = req.body;
+        const id_appointment = req.params.id;
         const user_id = req.user.id;
 
         try {
@@ -109,6 +109,7 @@ const userController = {
             res.json({message: 'Cita cancelada con éxito'});
 
         }catch (error){
+            console.log(error)
             return res.status(500).json({message: 'No se ha podido cancelar la cita'});
         }
         

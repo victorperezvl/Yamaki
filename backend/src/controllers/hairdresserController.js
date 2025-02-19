@@ -44,7 +44,7 @@ const hairdresserController = {
     //Cancel appointment
     cancelAppointment: async (req, res) => {
 
-        const {id_appointment} = req.body;
+        const id_appointment = req.params.id;
 
         try {
 
@@ -73,9 +73,9 @@ const hairdresserController = {
 
     //See appointments of the day
     seeAppointments: async (req, res) => {
-
-        const {date} = req.body;
-
+        
+        const date = req.params.date;
+        
         try {
             const [result] = await db.execute(
                 `SELECT 
@@ -109,7 +109,7 @@ const hairdresserController = {
     //See information about users with booked appointments
     seeInformationUsers: async (req, res) => {
 
-        const {id_appointment} = req.body;
+        const id_appointment = req.params.id;
 
         try {
             const [result] = await db.execute(
@@ -173,9 +173,9 @@ const hairdresserController = {
 
     //Search users by name, instagram, email or phone
     searchUsers: async (req, res) => {
-        const {searchQuery} = req.body;
+        const {searchUsers} = req.query;
     
-        if (!searchQuery) {
+        if (!searchUsers) {
             return res.status(400).json({message: 'Debe proporcionar un criterio de búsqueda'});
         }
     
@@ -192,7 +192,7 @@ const hairdresserController = {
                    OR phone LIKE ? 
                    OR instagram LIKE ? 
                 LIMIT 10`, 
-                [`%${searchQuery}%`, `%${searchQuery}%`, `%${searchQuery}%`, `%${searchQuery}%`]
+                [`%${searchUsers}%`, `%${searchUsers}%`, `%${searchUsers}%`, `%${searchUsers}%`]
             );
     
             if (results.length === 0) {
@@ -208,7 +208,7 @@ const hairdresserController = {
 
     //See information registered users 
     informationRegisteredUsers: async (req, res) => {
-        const {id_user} = req.body;
+        const id_user = req.params.id;
 
         try {
             const [result] = await db.execute (
