@@ -1,4 +1,5 @@
 const db = require ('../database.js');
+const sendEmail = require ('../email.js');
 
 const userController = {
 
@@ -20,7 +21,7 @@ const userController = {
     
             if (existingAppointment.length > 0) {
                 await connection.rollback();
-                return res.status(400).json({ message: "Horario no disponible" });
+                return res.status(400).json({ message: 'Horario no disponible' });
             }
     
             await connection.execute(
@@ -30,12 +31,35 @@ const userController = {
             );
             
             await connection.commit();
-            res.json({ message: "Cita reservada con éxito" });
+
+            //Email sending 
+            const [sqlName] = await db.execute('SELECT name FROM users WHERE id = ?', [user_id] );
+            const user_name = sqlName[0].name;
+
+            const [sqlEmail] = await db.execute('SELECT email FROM users WHERE id = ?', [user_id]);
+            const user_email = sqlEmail[0].email;
+
+            const subject = 'Confirmación de cita';
+            const text = `Hola! ${user_name}, tu cita ha sido reservada con éxito`;
+
+            const html =  ` <p>Hola ${user_name}</p>
+                            <p>Tu cita ha sido reservada para el <b>${date}</b> a las <b>${time}</b>.</p>
+                            <p>Gracias por confiar en Yamaki.</p>`;
+
+            console.log(user_email);
+            const emailSent = await sendEmail (user_email, subject, text, html);
+            
+            if (emailSent) {
+                res.status(200).json({ message: 'Cita reservada y correo enviado' });
+            } else {
+                res.status(500).json({ message: 'Cita reservada, pero fallo el correo' });
+            }
+                            
     
         } catch (error) {
             await connection.rollback();
             console.error(error);
-            res.status(500).json({ message: "Error al reservar la cita" });
+            res.status(500).json({ message: 'Error al reservar la cita' });
         }finally {
             connection.release();
         }
@@ -53,7 +77,7 @@ const userController = {
             await connection.beginTransaction();
 
             if (!email || !phone) {
-                return res.status(400).json({message: "Debes introducir un email y un teléfono"})
+                return res.status(400).json({message: 'Debes introducir un email y un teléfono'})
             }
 
             const [existingAppointment] = await connection.execute(
@@ -63,7 +87,7 @@ const userController = {
     
             if (existingAppointment.length > 0) {
                 await connection.rollback();
-                return res.status(400).json({ message: "Horario no disponible" });
+                return res.status(400).json({ message: 'Horario no disponible' });
             }
 
             await connection.execute(
@@ -72,12 +96,28 @@ const userController = {
             );
 
             await connection.commit();
-            res.json({message: 'Cita reservada con éxito'});
+
+            //Email sending 
+            const subject = 'Confirmación de cita';
+            const text = `Hola ${name}, tu cita ha sido reservada con éxito`;
+            const html = ` <p>Hola ${name}</p>
+                            <p>Tu cita ha sido reservada para el <b>${date}</b> a las <b>${time}</b>.</p>
+                            <p>Gracias por confiar en Yamaki.</p>`;
+
+            const emailSent = await sendEmail(email, subject, text, html);
+
+            if (emailSent) {
+                res.status(200).json({ message: 'Cita reservada y correo enviado' });
+            } else {
+                console.log(error);
+                res.status(500).json({ message: 'Cita reservada, pero falló el correo' });
+            }
+
 
         } catch (error) {
             await connection.rollback();
             console.error(error);
-            res.status(500).json({ message: "Error al reservar la cita" });
+            res.status(500).json({ message: 'Error al reservar la cita' });
         } finally {
             connection.release();
         }

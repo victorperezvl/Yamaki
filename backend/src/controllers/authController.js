@@ -85,7 +85,7 @@ const authController = {
         }
 
         catch (error) {
-            console.log('Error al registrar')
+            console.log(error);
             return res.status(500).json({ error: 'Error en el registro' });
         }     
 

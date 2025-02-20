@@ -14,7 +14,7 @@ const authMiddlewares = {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
             if (decoded.role !== "client") {
-                return res.status(403).json({ message: "Acceso restringido a clientes." });
+                return res.status(403).json({ message: 'Acceso restringido a clientes' });
             }
 
             req.user = decoded; 
@@ -36,7 +36,7 @@ const authMiddlewares = {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
             if (decoded.role !== "hairdresser") {
-                return res.status(403).json({ message: "Acceso restringido a peluqueros." });
+                return res.status(403).json({ message: 'Acceso restringido a peluqueros' });
             }
 
             req.hairdresser = decoded;
