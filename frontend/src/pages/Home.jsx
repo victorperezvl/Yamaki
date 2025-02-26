@@ -1,9 +1,11 @@
 import { useState } from "react";
 import "../styles/Home.css";
 import userIcon from "../assets/iconUser.png"; 
+import homeImg from "../assets/peluqueria.png";
+import LoginModal from "../components/Login.jsx";
 
 const Home = () => {
-  const [user] = useState(null); // Aquí guardarás los datos del usuario cuando hagas login
+  const [showLogin, setShowLogin] = useState(false);
 
   return (
     <div>
@@ -17,16 +19,15 @@ const Home = () => {
                 <a href="#contacto">Contacto</a>
                 <a href="#servicios">CITA</a>
             </div>
-                <img src={userIcon} alt="Usuario" className="user-icon" />
+            <button className="user-btn">
+              <img src={userIcon} alt="Login" className="user-icon" onClick={() => setShowLogin(true)} />
+              <LoginModal show={showLogin} onClose={() => setShowLogin(false)} />
+            </button>               
           </div>
         </nav>
       <div className="home-container">
-        <h1>Bienvenido a Yamaki</h1>
-        {user ? (
-          <p>Hola, {user.name}! Aquí verás tus citas.</p>
-        ) : (
-          <p>Inicia sesión para ver tus citas.</p>
-        )}
+        <h1 className="homeTxt">Bienvenido a Yamaki</h1>
+        <img src={homeImg} alt="Imagenportada" className="homeImg" />
       </div>
     </div>
   );
