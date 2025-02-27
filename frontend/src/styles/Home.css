@@ -11,25 +11,6 @@
     gap: 15px; 
   }
   
-  .navbar {
-    background-color: black;
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 20px;
-    align-items: center;
-  }
-  
-  .navbar a {
-    color: white;
-    text-decoration: none;
-    padding: 10px;
-  }
-  
-  .navbar a:hover {
-    background-color: #575757;
-    border-radius: 5px;
-  }
-
   .user-icon {
     width: 40px; 
     height: 40px;

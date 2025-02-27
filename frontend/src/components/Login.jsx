@@ -1,12 +1,13 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
+import "../styles/login.css";
 
 const LoginModal = ({ show, onClose }) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  if (!show) return null; // Si `show` es false, no renderiza nada
+  if (!show) return null; 
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -53,7 +54,7 @@ const LoginModal = ({ show, onClose }) => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button type="submit">Ingresar</button>
+          <button type="submit">Iniciar sesión</button>
         </form>
       </div>
     </div>

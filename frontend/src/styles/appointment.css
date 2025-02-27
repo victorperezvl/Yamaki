@@ -1,0 +1,29 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Barra roja superior */
+.appointment-header {
+    background-color: #8B0000;
+    height: 3cm; /* Altura de 3 cm */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Sección con fondo negro */
+.appointment-form-container {
+    background-color: black;
+    height: calc(100vh - 3cm); /* Resta la altura de la barra roja */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
