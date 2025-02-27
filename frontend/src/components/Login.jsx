@@ -22,7 +22,7 @@ const LoginModal = ({ show, onClose }) => {
 
       if (response.ok) {
         alert("Login exitoso");
-        onClose(); // Cierra el modal al hacer login
+        onClose(); 
       } else {
         alert(data.message || "Error al iniciar sesión");
       }
