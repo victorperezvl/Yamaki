@@ -9,7 +9,7 @@
 /* Barra roja superior */
 .appointment-header {
     background-color: #8B0000;
-    height: 3cm; /* Altura de 3 cm */
+    height: 3cm; 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -26,4 +26,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 1;
 }
+
+.appointment-select {
+    padding: 20px;
+    border-radius: 10px;
+    position: relative; 
+    z-index: 2; 
+    text-align: center;
+  }

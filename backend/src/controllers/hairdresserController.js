@@ -1,6 +1,28 @@
 const db = require ('../database.js');
 
 const hairdresserController = {
+    
+    //Get hairdressers
+    getHairdressers: async (req, res) => {
+        
+        const {id_hairdresser} = req.body;
+
+        try {
+            const[result] = await db.execute(
+                'SELECT name FROM haidressers WHERE id=?',
+                [id_hairdresser]
+            );
+
+            if (result.length === 0) {
+                return res.status(403).json({message: 'No se han obtenido peluqueros'})
+            }
+
+            res.json(result);
+
+        } catch (error) {
+            res.status(500).json({message: 'No ha sido posible ejecutar la consulta'})
+        }
+    },
 
     //Confirm appointment and give points to user
     confirmAppointment: async (req, res) => {

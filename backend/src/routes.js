@@ -24,6 +24,7 @@ router.get('/appointments', authMiddlewares.authenticateUser, userController.see
 router.get('/appointments/history', authMiddlewares.authenticateUser, userController.appointmentsHistory);
 
 //Routes appointments hairdressers
+router.get ('/hairdresser', hairdresserController.getHairdressers);
 router.patch('/hairdresser/appointments', authMiddlewares.authenticateHairdresser, hairdresserController.confirmAppointment);
 router.delete('/hairdresser/appointments/:id', authMiddlewares.authenticateHairdresser, hairdresserController.cancelAppointment);
 router.get('/hairdresser/appointments/:date', authMiddlewares.authenticateHairdresser, hairdresserController.seeAppointments);
