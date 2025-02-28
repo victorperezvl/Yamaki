@@ -20,7 +20,7 @@ const Appointment = () => {
               <h1>RESERVA TU CITA</h1>
           </header>
           <section className="appointment-form-container">
-            <div className = "appointmen-select">
+            <div className = "appointment-select">
               <select>
                 <option value="">Selecciona un peluquero</option>
                 {hairdressers.map((hairdresser) => (
