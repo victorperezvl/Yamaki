@@ -5,12 +5,10 @@ const hairdresserController = {
     //Get hairdressers
     getHairdressers: async (req, res) => {
         
-        const {id_hairdresser} = req.body;
-
         try {
             const[result] = await db.execute(
-                'SELECT name FROM haidressers WHERE id=?',
-                [id_hairdresser]
+                'SELECT name FROM hairdressers'
+               
             );
 
             if (result.length === 0) {
