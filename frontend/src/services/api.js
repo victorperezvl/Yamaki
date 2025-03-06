@@ -5,7 +5,7 @@ export const fetchHairdressers = async () => {
         const response = await fetch (`${API_URL}/hairdresser`);
 
         if (!response.ok) {
-            throw new Error("Error al obtener servicios");
+            throw new Error("Error al obtener peluqueros");
         }
         return await response.json();
     } catch (error) {
@@ -13,5 +13,19 @@ export const fetchHairdressers = async () => {
         return [];
     } 
     
+}
+
+export const fetchServices = async () => {
+    try {
+        const response = await fetch (`${API_URL}/services`);
+
+        if (!response.ok) {
+            throw new Error("Error al obtener servicios");
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Error:", error);
+        return [];
+    }
 }
 

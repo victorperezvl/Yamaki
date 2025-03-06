@@ -5,6 +5,7 @@ const authHairdresser = require ('./controllers/authHairdressers.js');
 const userController = require ('./controllers/userController.js');
 const authMiddlewares = require ('./middlewares.js');
 const hairdresserController = require ('./controllers/hairdresserController.js');
+const servicesController = require ('./controllers/servicesControllers.js');
 
 //Routes auth users
 router.post('/login', authController.login);
@@ -35,7 +36,8 @@ router.get('/hairdresser/users/:id', authMiddlewares.authenticateHairdresser, ha
 router.patch('/hairdresser/appointments/points', authMiddlewares.authenticateHairdresser, hairdresserController.usePoints);
 router.get('/hairdresser/appointments/history/:id', authMiddlewares.authenticateHairdresser, hairdresserController.appointmentsHistory);
 
-
+//Routes for services
+router.get('/services', servicesController.getServices);
 
 
 module.exports = router;

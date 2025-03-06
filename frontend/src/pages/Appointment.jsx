@@ -1,5 +1,6 @@
 import "../styles/appointment.css";
 import { fetchHairdressers } from "../services/api";
+import { fetchServices } from "../services/api";
 import { useState } from "react";
 import { useEffect } from "react";
 
@@ -8,8 +9,18 @@ const Appointment = () => {
 
     useEffect(() => {
         const loadData = async () => {
-            const peluquerosData = await fetchHairdressers();
-            setHairdressers(peluquerosData);
+            const hairdressersData = await fetchHairdressers();
+            setHairdressers(hairdressersData);
+        };
+        loadData();
+    }, []);
+
+  const [services, setServices] = useState([]);
+
+    useEffect(() => {
+        const loadData = async () => {
+          const servicesData = await fetchServices();
+          setServices(servicesData);
         };
         loadData();
     }, []);
@@ -31,6 +42,11 @@ const Appointment = () => {
               </select>
               <select>
                 <option value="">Selecciona un servicio</option>
+                {services.map((service) => (
+                            <option key={service.id} value={service.id}>
+                                {service.name}
+                            </option>
+                ))}
               </select>
             </div> 
           </section>         
