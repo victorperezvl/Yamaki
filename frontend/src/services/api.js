@@ -29,3 +29,12 @@ export const fetchServices = async () => {
     }
 }
 
+export const fetchAppointment = async () => {
+    const appointmentData = {
+        hairdresser: selectedHairdresser,
+        service: selectedService,
+        
+    }
+
+}
+

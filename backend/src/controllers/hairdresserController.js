@@ -7,7 +7,7 @@ const hairdresserController = {
         
         try {
             const[result] = await db.execute(
-                'SELECT name FROM hairdressers'
+                'SELECT id, name FROM hairdressers'
                
             );
 
