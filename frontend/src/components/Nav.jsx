@@ -17,6 +17,7 @@ const Nav = () => {
           <a href="#galeria">Galería</a>
           <a href="#contacto">Contacto</a>
           <a href="/cita">CITA</a>
+          <a href="#miPerfil">Mi perfil</a>
         </div>
         <button className="user-btn">
           <img src={userIcon} alt="Login" className="user-icon" onClick={() => setShowLogin(true)} />
