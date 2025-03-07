@@ -1,58 +1,41 @@
 import "../styles/appointment.css";
-import { fetchHairdressers } from "../services/api";
-import { fetchServices } from "../services/api";
 import { useState } from "react";
-import { useEffect } from "react";
+import AppointmentForm from "../components/appointment1";
+import Calendar from "../components/appointment2";
 
 const Appointment = () => {
-  const [hairdressers, setHairdressers] = useState([]);
+  const [step, setStep] = useState(1);
 
-    useEffect(() => {
-        const loadData = async () => {
-            const hairdressersData = await fetchHairdressers();
-            setHairdressers(hairdressersData);
-        };
-        loadData();
-    }, []);
+  const [selectedHairdresser, setSelectedHairdresser] = useState('');
+  const [selectedService, setSelectedService] = useState('');
 
-  const [services, setServices] = useState([]);
+  const handleNext = (hairdresser, service) => {
+    if (hairdresser && service) {
+      setSelectedHairdresser(hairdresser);
+      setSelectedService(service);
+      setStep(2);
+    } else {
+      alert("Por favor, selecciona un peluquero y un servicio.");
+    }
+  };
 
-    useEffect(() => {
-        const loadData = async () => {
-          const servicesData = await fetchServices();
-          setServices(servicesData);
-        };
-        loadData();
-    }, []);
+  return (
+    <div className="appointment-container">
+      <header className="appointment-header">
+        <h1>RESERVA TU CITA</h1>
+      </header>
 
-    return  (
-        <div className = "appointment-container">
-          <header className="appointment-header">
-              <h1>RESERVA TU CITA</h1>
-          </header>
-          <section className="appointment-form-container">
-            <div className = "appointment-select">
-              <select>
-                <option value="">Selecciona un peluquero</option>
-                {hairdressers.map((hairdresser) => (
-                            <option key={hairdresser.id} value={hairdresser.id}>
-                                {hairdresser.name}
-                            </option>
-                ))}
-              </select>
-              <select>
-                <option value="">Selecciona un servicio</option>
-                {services.map((service) => (
-                            <option key={service.id} value={service.id}>
-                                {service.name}
-                            </option>
-                ))}
-              </select>
-            </div> 
-          </section>         
-        </div>
-    );
+      <section className="appointment-form-container">
+        {step === 1 && (
+          <AppointmentForm handleNext={handleNext} />
+        )}
 
+        {step === 2 && (
+          <Calendar selectedHairdresser={selectedHairdresser} selectedService={selectedService} />
+        )}
+      </section>
+    </div>
+  );
 };
 
 export default Appointment;
