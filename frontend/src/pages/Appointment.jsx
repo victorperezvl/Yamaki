@@ -1,7 +1,8 @@
 import "../styles/appointment.css";
 import { useState } from "react";
-import AppointmentForm from "../components/appointment1";
-import Calendar from "../components/appointment2";
+import Appointment1 from "../components/Appointment1.jsx";
+import Appointment2 from "../components/Appointment2.jsx";
+
 
 const Appointment = () => {
   const [step, setStep] = useState(1);
@@ -27,11 +28,11 @@ const Appointment = () => {
 
       <section className="appointment-form-container">
         {step === 1 && (
-          <AppointmentForm handleNext={handleNext} />
+          <Appointment1 handleNext={handleNext} />
         )}
 
         {step === 2 && (
-          <Calendar selectedHairdresser={selectedHairdresser} selectedService={selectedService} />
+          <Appointment2 selectedHairdresser={selectedHairdresser} selectedService={selectedService} />
         )}
       </section>
     </div>
