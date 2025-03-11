@@ -1,7 +1,8 @@
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import { useState } from "react";
 
-const Calendar = () => {
+const Calen = () => {
   const [fechaSeleccionada, setFechaSeleccionada] = useState(null);
 
   return (
@@ -16,3 +17,5 @@ const Calendar = () => {
     </div>
   );
 };
+
+export default Calen;
