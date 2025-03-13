@@ -203,6 +203,27 @@ const userController = {
             return res.status(500).json({message: 'No se ha podido consultar el historial de citas'})
         }
         
+    },
+
+    //Get All pending appointments
+    getAllAppointments: async (req , res) => {
+
+        try {
+
+           const [result] = await db.execute(
+            'SELECT * FROM appointments WHERE status="pending"')
+
+            if (result === 0) {
+                return res.status(401).json({error: 'No hay citas pendientes'})
+            } 
+
+            res.json(result);
+
+        } catch (error) {
+            res.status(500).json({error});
+
+        }
+        
     }
     
 
