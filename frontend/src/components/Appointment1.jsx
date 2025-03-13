@@ -78,7 +78,7 @@ const Appointment1 = ( {handleNext} ) => {
         </select>
       </div>
 
-      <button onClick={onNextClick}>Siguiente</button>
+      <button onClick={onNextClick}>Elige fecha y hora</button>
     </div>
   );
 };

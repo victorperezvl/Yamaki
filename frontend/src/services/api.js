@@ -31,38 +31,62 @@ export const fetchServices = async () => {
     }
 }
 
-//Fetch for book appointment for guest users
-export const fetchBookGuest = async (email, phone, name, hairdresser, date, time) => {
-    const bookData = {
-
-        email,
-        phone,
-        name,
-        hairdresser,
-        date,
-        time
-    }
+// Reservar cita para invitados
+export const fetchBookGuest = async ({ email, phone, name, hairdresser_id, date, time }) => {
     try {
-        const response = await fetch ('/api/appointments/guest', {
+        const response = await fetch('/api/appointments/guest', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(bookData),
-        })
-    
-        if (response.ok) {
-            alert('Cita confirmada');
-          } else {
-            alert('Error al crear la cita');
-          }
+            body: JSON.stringify({
+                email,
+                phone,
+                name,
+                hairdresser_id,
+                date,
+                time
+            }),
+        });
 
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Error al reservar la cita');
+        }
+
+        return await response.json();
     } catch (error) {
-        console.error('Error en la solicitud:', error);
-        alert('Hubo un problema al conectar con el servidor.');
-    }        
-
+        throw new Error('Error en la solicitud: ' + error.message);
+    }
 };
+
+// Reservar cita para usuarios autenticados
+export const fetchBookLogged = async ({ hairdresser_id, date, time, token }) => {
+    try {
+        const response = await fetch('/api/appointments/logged', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`  
+            },
+            body: JSON.stringify({
+                hairdresser_id,
+                date,
+                time
+            }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Error al reservar la cita');
+        }
+
+        return await response.json();
+    } catch (error) {
+        throw new Error('Error en la solicitud: ' + error.message);
+    }
+};
+
 
 // Fetch for get booked appointments
 export const fetchAppointments = async () => {
