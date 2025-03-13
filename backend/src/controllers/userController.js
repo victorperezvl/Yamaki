@@ -156,7 +156,7 @@ const userController = {
     },
 
     //See pending appointments
-    seeAppointment: async (req, res) => {
+    getAppointment: async (req, res) => {
 
         const user_id = req.user.id;
 

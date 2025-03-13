@@ -64,3 +64,5 @@ export const fetchBookGuest = async (email, phone, name, hairdresser, date, time
 
 };
 
+// Fetch for get booked appointments
+export const fetchBooked = async ()

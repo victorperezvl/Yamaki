@@ -21,7 +21,7 @@ router.post('/hairdresser/logout', authHairdresser.logout);
 router.post('/appointments', authMiddlewares.authenticateUser, userController.bookLogged);
 router.post('/appointments/guest', userController.bookGuest);
 router.delete('/appointments/:id', authMiddlewares.authenticateUser, userController.cancelAppointment);
-router.get('/appointments', authMiddlewares.authenticateUser, userController.seeAppointment);
+router.get('/appointments', userController.getAppointment);
 router.get('/appointments/history', authMiddlewares.authenticateUser, userController.appointmentsHistory);
 
 //Routes appointments hairdressers
