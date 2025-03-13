@@ -12,7 +12,7 @@ const Appointment = ({ isAuthenticated }) => {
   const [selectedService, setSelectedService] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState("");
-  const [setGuestInfo] = useState(null);
+  const [guestInfo, setGuestInfo] = useState({ name: "", email: "", phone: "" });
 
   // Paso 1: Selección de peluquero y servicio
   const handleNext = (hairdresser, service) => {
@@ -34,18 +34,33 @@ const Appointment = ({ isAuthenticated }) => {
 
   // Paso 3: Para invitados → Recoger datos antes de confirmar
   const handleGuestConfirm = (guestData) => {
+    if (!guestData || !guestData.name || !guestData.email || !guestData.phone) {
+      alert("Error: Faltan datos del invitado.");
+      return;
+    }
     setGuestInfo(guestData);
     handleConfirmAppointment(guestData);
   };
 
   // Paso 3: Confirmar cita para usuarios autenticados o invitados
   const handleConfirmAppointment = (extraData = {}) => {
-    BookAppointment({
+    const name = extraData.name || guestInfo.name;
+    const email = extraData.email || guestInfo.email;
+    const phone = extraData.phone || guestInfo.phone;
+
+    if (!name || !email || !phone) {
+      alert("Error: Faltan datos para confirmar la cita.");
+      return;
+    }
+
+    const appointmentData = {
       hairdresser: selectedHairdresser,
       service: selectedService,
       date: selectedDate,
       time: selectedTime,
-      ...extraData,
+      name,
+      email,
+      phone,
       onSuccess: () => {
         alert("Cita reservada con éxito");
         setStep(1);
@@ -53,7 +68,10 @@ const Appointment = ({ isAuthenticated }) => {
       onError: (message) => {
         alert(message);
       },
-    });
+    };
+
+    console.log("Enviando datos de la cita:", appointmentData);
+    BookAppointment(appointmentData);
   };
 
   return (
@@ -81,4 +99,3 @@ Appointment.propTypes = {
 };
 
 export default Appointment;
-
