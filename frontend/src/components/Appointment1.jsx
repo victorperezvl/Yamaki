@@ -1,7 +1,8 @@
+import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import { fetchHairdressers, fetchServices } from "../services/api";
 
-const Appointment1 = ( handleNext ) => {
+const Appointment1 = ( {handleNext} ) => {
 
   const [selectedHairdresser, setSelectedHairdresser] = useState('');
   const [selectedService, setSelectedService] = useState('');
@@ -80,6 +81,10 @@ const Appointment1 = ( handleNext ) => {
       <button onClick={onNextClick}>Siguiente</button>
     </div>
   );
+};
+
+Appointment1.propTypes = {
+  handleNext: PropTypes.func.isRequired, // Debe ser una función obligatoria
 };
 
 export default Appointment1;
