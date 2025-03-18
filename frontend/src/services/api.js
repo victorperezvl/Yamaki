@@ -34,7 +34,7 @@ export const fetchServices = async () => {
 // Reservar cita para invitados
 export const fetchBookGuest = async ({ email, phone, name, hairdresser_id, date, time }) => {
     try {
-        const response = await fetch('/api/appointments/guest', {
+        const response = await fetch(`${API_URL}appointments/guest`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

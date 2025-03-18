@@ -13,6 +13,7 @@ const Appointment = ({ isAuthenticated }) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState("");
   const [guestInfo, setGuestInfo] = useState({ name: "", email: "", phone: "" });
+  const [confirmationMessage, setConfirmationMessage] = useState ("");
 
   // Paso 1: Selección de peluquero y servicio
   const handleNext = (hairdresser, service) => {
@@ -53,22 +54,29 @@ const Appointment = ({ isAuthenticated }) => {
       return;
     }
 
+    const formattedDate = selectedDate instanceof Date 
+    ? selectedDate.toISOString().split("T")[0] 
+    : selectedDate;
+
     const appointmentData = {
       hairdresser: selectedHairdresser,
       service: selectedService,
-      date: selectedDate,
+      date: formattedDate,
       time: selectedTime,
-      name,
-      email,
-      phone,
+       guestInfo: {
+          name,
+          email,
+          phone
+       },
       onSuccess: () => {
-        alert("Cita reservada con éxito");
-        setStep(1);
+        setConfirmationMessage(`Cita confirmada el día ${selectedDate.toLocaleDateString()} a las ${selectedTime} con ${selectedHairdresser}`)
+        setStep(4);
       },
       onError: (message) => {
         alert(message);
       },
     };
+
 
     console.log("Enviando datos de la cita:", appointmentData);
     BookAppointment(appointmentData);
@@ -89,6 +97,13 @@ const Appointment = ({ isAuthenticated }) => {
           ) : (
             <GuestInfo onConfirm={handleGuestConfirm} />
           ))}
+        {step === 4 && (
+        <div className="confirmation-message">
+          <h2>¡Cita Reservada!</h2>
+          <p>{confirmationMessage}</p>
+          <button onClick={() => setStep(1)}>Reservar otra cita</button>
+        </div>
+        )}
       </section>
     </div>
   );

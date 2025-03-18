@@ -25,6 +25,8 @@ const bookAppointment = async ({ hairdresser, date, time, guestInfo, isAuthentic
             });
         }
 
+        
+
         onSuccess(response);
     } catch (error) {
         onError(error.message);
