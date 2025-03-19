@@ -69,7 +69,7 @@ const Appointment = ({ isAuthenticated }) => {
           phone
        },
       onSuccess: () => {
-        setConfirmationMessage(`Cita confirmada el día ${selectedDate.toLocaleDateString()} a las ${selectedTime} con ${selectedHairdresser}`)
+        setConfirmationMessage(`Cita confirmada el día ${selectedDate.toLocaleDateString()} a las ${selectedTime}`)
         setStep(4);
       },
       onError: (message) => {

@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import PropTypes from "prop-types";
+import AuthContext from "./AuthContext";
 import "../styles/login.css";
 
 const LoginModal = ({ show, onClose }) => {
 
+  const {login} = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -21,6 +23,7 @@ const LoginModal = ({ show, onClose }) => {
       const data = await response.json();
 
       if (response.ok) {
+        login(data.token);
         alert("Login exitoso");
         onClose(); 
       } else {
