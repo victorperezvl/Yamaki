@@ -71,6 +71,8 @@ const Appointment = () => {
         date: formattedDate,
         time: selectedTime,
         userId: user.id,
+        isAuthenticated: true,
+        token: user.token,
         onSuccess,
         onError
       }

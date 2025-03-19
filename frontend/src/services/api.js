@@ -1,5 +1,6 @@
 const API_URL = import.meta.env.VITE_URL_API;
 
+
 //Fetch for get hairdressers
 export const fetchHairdressers = async () => {
     try {
@@ -61,15 +62,16 @@ export const fetchBookGuest = async ({ email, phone, name, hairdresser_id, date,
 };
 
 // Reservar cita para usuarios autenticados
-export const fetchBookLogged = async ({ hairdresser_id, date, time, token }) => {
+export const fetchBookLogged = async ({ user_id, hairdresser_id, date, time, token }) => {
     try {
-        const response = await fetch('/api/appointments/logged', {
+        const response = await fetch(`${API_URL}appointments`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`  
             },
             body: JSON.stringify({
+                user_id,
                 hairdresser_id,
                 date,
                 time
