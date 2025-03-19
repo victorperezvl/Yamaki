@@ -4,6 +4,7 @@ import Appointment from "./pages/Appointment.jsx";
 import Nav from "./components/Nav.jsx"
 import { AuthProvider } from "./components/AuthContext.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
+import LoginModal from "./components/Login.jsx";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             }
           />
       </Routes>
+      <LoginModal />
     </AuthProvider>
   </Router>
       

@@ -23,7 +23,7 @@ const LoginModal = ({ show, onClose }) => {
       const data = await response.json();
 
       if (response.ok) {
-        login(data.token);
+        login(data.user);
         alert("Login exitoso");
         onClose(); 
       } else {

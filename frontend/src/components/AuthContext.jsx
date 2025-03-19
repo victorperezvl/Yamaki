@@ -13,9 +13,9 @@ export const AuthProvider = ({children}) => {
         }
     }, []);
 
-    const login = (token) => {
-        localStorage.setItem("token", token);
-        setUser({token});
+    const login = (user) => {
+        localStorage.setItem("token", user.token);
+        setUser({user});
     };
 
     const logout = () => {
@@ -32,7 +32,7 @@ export const AuthProvider = ({children}) => {
 };
 
 AuthProvider.propTypes = {
-  children: PropTypes.func.isRequired, 
+  children: PropTypes.node.isRequired, 
 };
 
 export default AuthContext; 
