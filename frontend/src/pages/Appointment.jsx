@@ -1,13 +1,16 @@
 import "../styles/appointment.css";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Appointment1 from "../components/Appointment1.jsx";
 import Calen from "../components/Calendar.jsx";
 import GuestInfo from "../components/GuestInfo.jsx";
 import BookAppointment from "../components/BookAppointment.jsx";
 import PropTypes from "prop-types";
+import AuthContext from "../components/AuthContext.jsx";
 
-const Appointment = ({ isAuthenticated }) => {
+const Appointment = () => {
   const [step, setStep] = useState(1);
+  const {user} = useContext(AuthContext);
+  const isAuthenticated = user !== null;
   const [selectedHairdresser, setSelectedHairdresser] = useState("");
   const [selectedService, setSelectedService] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
@@ -45,41 +48,60 @@ const Appointment = ({ isAuthenticated }) => {
 
   // Paso 3: Confirmar cita para usuarios autenticados o invitados
   const handleConfirmAppointment = (extraData = {}) => {
-    const name = extraData.name || guestInfo.name;
-    const email = extraData.email || guestInfo.email;
-    const phone = extraData.phone || guestInfo.phone;
-
-    if (!name || !email || !phone) {
-      alert("Error: Faltan datos para confirmar la cita.");
-      return;
-    }
 
     const formattedDate = selectedDate instanceof Date 
     ? selectedDate.toISOString().split("T")[0] 
     : selectedDate;
 
-    const appointmentData = {
-      hairdresser: selectedHairdresser,
-      service: selectedService,
-      date: formattedDate,
-      time: selectedTime,
-       guestInfo: {
-          name,
-          email,
-          phone
-       },
-      onSuccess: () => {
-        setConfirmationMessage(`Cita confirmada el día ${selectedDate.toLocaleDateString()} a las ${selectedTime}`)
-        setStep(4);
-      },
-      onError: (message) => {
-        alert(message);
-      },
-    };
+    const onSuccess = () => {
+      setConfirmationMessage(`Cita confirmada el día ${selectedDate.toLocaleDateString()} a las ${selectedTime}`)
+      setStep(4);
+    }
+    const onError = (message) => {
+      alert(message);
+    }
 
+
+    let appointmentData;
+
+    if (isAuthenticated){
+      appointmentData = {
+        hairdresser: selectedHairdresser,
+        service: selectedService,
+        date: formattedDate,
+        time: selectedTime,
+        userId: user.id,
+        onSuccess,
+        onError
+      }
+    } else {
+      const name = extraData.name || guestInfo.name;
+      const email = extraData.email || guestInfo.email;
+      const phone = extraData.phone || guestInfo.phone;
+  
+      if (!name || !email || !phone) {
+        alert("Error: Faltan datos para confirmar la cita.");
+        return;
+      }
+      appointmentData = {
+        hairdresser: selectedHairdresser,
+        service: selectedService,
+        date: formattedDate,
+        time: selectedTime,
+         guestInfo: {
+            name,
+            email,
+            phone,
+         },
+         isAuthenticated: false,
+         onSuccess,
+         onError
+      }
+    }
 
     console.log("Enviando datos de la cita:", appointmentData);
     BookAppointment(appointmentData);
+    
   };
 
   return (

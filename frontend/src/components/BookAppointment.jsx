@@ -10,8 +10,7 @@ const bookAppointment = async ({ hairdresser, date, time, guestInfo, isAuthentic
             response = await fetchBookLogged({ 
                 hairdresser_id: hairdresser, 
                 date, 
-                time, 
-                token 
+                time
             });
         } else {
             // Usuario invitado

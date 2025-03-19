@@ -21,7 +21,7 @@ const LoginModal = ({ show, onClose }) => {
       });
 
       const data = await response.json();
-
+      console.log(data);
       if (response.ok) {
         login(data.user);
         alert("Login exitoso");
