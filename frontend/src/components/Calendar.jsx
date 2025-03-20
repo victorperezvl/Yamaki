@@ -12,15 +12,17 @@ const Calen = ({ onSelectDate }) => {
   useEffect(() => {
     const fetchCitas = async () => {
       try {
-        const response = await fetchAppointments;
-        if (response.ok) {
-          const data = await response.json();
-          setCitasOcupadas(data);
-        } else {
-          console.error("Error al cargar citas");
+        const data = await fetchAppointments();
+
+        console.log("Respuesta de la API:", data);
+
+        if (!Array.isArray(data)) {
+          throw new Error("La API no devolvió un array");
         }
+  
+        setCitasOcupadas(data); // Guardar las citas en el estado
       } catch (error) {
-        console.error("Error en la petición:", error);
+        console.error("Error al cargar citas:", error);
       }
     };
 
@@ -35,7 +37,7 @@ const Calen = ({ onSelectDate }) => {
   const handleTimeChange = (event) => {
     setHoraSeleccionada(event.target.value);
   };
-
+  
   const horasDisponibles = () => {
     let horas = [];
     let ahora = new Date();
@@ -53,19 +55,34 @@ const Calen = ({ onSelectDate }) => {
 
         // Verificar si está ocupada
         let ocupada = citasOcupadas.some((cita) => {
-          let citaFecha = new Date(cita.fecha);
+          console.log("Cita desde API:", cita);
+        
+          if (!cita || !cita.appointment_date || !cita.appointment_time) {
+            console.warn("Cita con fecha inválida:", cita);
+            return false;
+          }
+        
+          // Construir la fecha completa usando date y time
+          let [year, month, day] = cita.appointment_date.split("T")[0].split("-");
+          let [hours, minutes] = cita.appointment_time.split(":");
+        
+          let citaFecha = new Date(year, month - 1, day, hours, minutes);
+        
+          console.log("Fecha convertida:", citaFecha);
+        
           return (
             citaFecha.toDateString() === fechaSeleccionada.toDateString() &&
             citaFecha.getHours() === hora &&
             citaFecha.getMinutes() === min
           );
-        });
+        });             
 
         if (!ocupada) horas.push(horaStr);
       }
     }
     return horas;
   };
+
 
   return (
     <div>

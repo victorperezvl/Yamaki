@@ -79,3 +79,21 @@
     background-color: #0056b3;
   }
   
+  /* Espaciado entre los botones */
+.modal-content .login-button {
+  margin-top: 10px;
+}
+
+/* Estilo del botón de cerrar sesión */
+.modal-content .logout-button {
+  width: auto; /* Ajusta el tamaño según el contenido */
+  padding: 8px 15px;
+  background: #555; /* Color más neutro */
+  font-size: 14px; /* Más pequeño */
+  margin-top: 15px; /* Espaciado con respecto al botón de iniciar sesión */
+  display: inline-block;
+}
+
+.modal-content .logout-button:hover {
+  background-color: #444;
+}

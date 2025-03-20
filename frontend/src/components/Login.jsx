@@ -1,11 +1,12 @@
 import { useState, useContext } from "react";
 import PropTypes from "prop-types";
+const API_URL = import.meta.env.VITE_URL_API;
 import AuthContext from "./AuthContext";
 import "../styles/login.css";
 
 const LoginModal = ({ show, onClose }) => {
 
-  const {login} = useContext(AuthContext);
+  const {login, logout} = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -14,7 +15,7 @@ const LoginModal = ({ show, onClose }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:4000/api/login", {
+      const response = await fetch(`${API_URL}login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -33,6 +34,11 @@ const LoginModal = ({ show, onClose }) => {
       console.error("Error al conectar con el servidor:", error);
       alert("Error al conectar con el servidor");
     }
+  };
+
+  const handleLogout = () => {
+    logout(); // Llamar a la función logout del contexto
+    alert("Has cerrado sesión");
   };
 
   return (
@@ -57,8 +63,11 @@ const LoginModal = ({ show, onClose }) => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button type="submit">Iniciar sesión</button>
-        </form>
+          <button type="submit" className="login-button" >Iniciar sesión</button>
+        </form>      
+        <button onClick={handleLogout} className="logout-button">
+          Cerrar sesión
+        </button> 
       </div>
     </div>
   );

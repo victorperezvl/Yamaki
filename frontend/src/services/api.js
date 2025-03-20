@@ -93,7 +93,7 @@ export const fetchBookLogged = async ({ user_id, hairdresser_id, date, time, tok
 // Fetch for get booked appointments
 export const fetchAppointments = async () => {
     try {
-        const response = await fetch (`${API_URL}/appointment/pending`);
+        const response = await fetch (`${API_URL}appointments/pending`);
 
         if (!response.ok) {
             throw new Error("Error al obtener citas");
