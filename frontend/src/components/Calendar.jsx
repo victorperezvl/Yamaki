@@ -4,6 +4,17 @@ import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { fetchAppointments } from "../services/api";
 
+// Función para convertir la fecha a UTC y evitar problemas de zona horaria
+const dateUTC = (fecha) => {
+  if (!(fecha instanceof Date)) return ""; // Evita errores si fecha es null o un string
+  const fechaUTC = new Date(Date.UTC(
+    fecha.getFullYear(),
+    fecha.getMonth(),
+    fecha.getDate()
+  ));
+  return fechaUTC.toISOString().split("T")[0]; // Devuelve YYYY-MM-DD
+};
+
 const Calen = ({ onSelectDate }) => {
   const [fechaSeleccionada, setFechaSeleccionada] = useState(null);
   const [horaSeleccionada, setHoraSeleccionada] = useState("");
@@ -19,7 +30,7 @@ const Calen = ({ onSelectDate }) => {
         if (!Array.isArray(data)) {
           throw new Error("La API no devolvió un array");
         }
-  
+
         setCitasOcupadas(data); // Guardar las citas en el estado
       } catch (error) {
         console.error("Error al cargar citas:", error);
@@ -31,13 +42,13 @@ const Calen = ({ onSelectDate }) => {
 
   const handleDateChange = (date) => {
     setFechaSeleccionada(date);
-    setHoraSeleccionada(""); 
+    setHoraSeleccionada("");
   };
 
   const handleTimeChange = (event) => {
     setHoraSeleccionada(event.target.value);
   };
-  
+
   const horasDisponibles = () => {
     let horas = [];
     let ahora = new Date();
@@ -56,26 +67,26 @@ const Calen = ({ onSelectDate }) => {
         // Verificar si está ocupada
         let ocupada = citasOcupadas.some((cita) => {
           console.log("Cita desde API:", cita);
-        
+
           if (!cita || !cita.appointment_date || !cita.appointment_time) {
             console.warn("Cita con fecha inválida:", cita);
             return false;
           }
-        
+
           // Construir la fecha completa usando date y time
           let [year, month, day] = cita.appointment_date.split("T")[0].split("-");
           let [hours, minutes] = cita.appointment_time.split(":");
-        
-          let citaFecha = new Date(year, month - 1, day, hours, minutes);
-        
+
+          let citaFecha = new Date(Date.UTC(year, month - 1, day, hours, minutes));
+
           console.log("Fecha convertida:", citaFecha);
-        
+
           return (
-            citaFecha.toDateString() === fechaSeleccionada.toDateString() &&
-            citaFecha.getHours() === hora &&
-            citaFecha.getMinutes() === min
+            citaFecha.toISOString().split("T")[0] === dateUTC(fechaSeleccionada) &&
+            citaFecha.getUTCHours() === hora &&
+            citaFecha.getUTCMinutes() === min
           );
-        });             
+        });
 
         if (!ocupada) horas.push(horaStr);
       }
@@ -83,14 +94,13 @@ const Calen = ({ onSelectDate }) => {
     return horas;
   };
 
-
   return (
     <div>
       <h2>Selecciona una fecha</h2>
       <Calendar
         onChange={handleDateChange}
         value={fechaSeleccionada}
-        minDate={new Date()} 
+        minDate={new Date()}
       />
 
       {fechaSeleccionada && (
@@ -108,11 +118,11 @@ const Calen = ({ onSelectDate }) => {
       )}
 
       {fechaSeleccionada && horaSeleccionada && (
-        <p>Cita seleccionada: {fechaSeleccionada.toDateString()} a las {horaSeleccionada}</p>
+        <p>Cita seleccionada: {dateUTC(new Date(fechaSeleccionada))} a las {horaSeleccionada}</p>
       )}
 
       <button
-        onClick={() => onSelectDate({ fecha: fechaSeleccionada, hora: horaSeleccionada })}
+        onClick={() => onSelectDate({ fecha: dateUTC(new Date(fechaSeleccionada)), hora: horaSeleccionada })}
         disabled={!fechaSeleccionada || !horaSeleccionada}
       >
         Confirmar Fecha y Hora
