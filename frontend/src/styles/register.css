@@ -1,0 +1,35 @@
+.register-container {
+    width: 320px;
+    margin: 80px auto 20px; /* Aumentamos el margen superior */
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fff; /* Opcional: para darle un fondo */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Opcional: sombrita para destacar */
+  }
+  
+  .register-container input {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 8px;
+  }
+  
+  .register-container input[type="file"] {
+    border: none;
+  }
+  
+  .register-container button {
+    background-color: #ff4747;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+  }
+  
+  .register-container p {
+    margin-top: 10px;
+    color: green;
+  }
+  

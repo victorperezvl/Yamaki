@@ -1,21 +1,34 @@
 import { useState } from "react";
 const API_URL = import.meta.env.VITE_URL_API;
+import "../styles/register.css"
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [instagram, setInstagram] = useState("");
+  const [photo, setPhoto] = useState(null);
   const [message, setMessage] = useState("");
 
   const handleRegister = async (e) => {
     e.preventDefault();
     setMessage(""); 
 
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("phone", phone);
+    formData.append("instagram", instagram);
+    if (photo) {
+      formData.append("photo", photo);
+    }
+
     try {
       const response = await fetch(`${API_URL}register`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
+        body: formData, // Enviar datos como FormData para manejar imágenes
       });
 
       const data = await response.json();
@@ -24,6 +37,9 @@ const Register = () => {
         setName("");
         setEmail("");
         setPassword("");
+        setPhone("");
+        setInstagram("");
+        setPhoto(null);
       } else {
         setMessage(data.message || "Error al registrar.");
       }
@@ -36,7 +52,7 @@ const Register = () => {
   return (
     <div className="register-container">
       <h2>Registro</h2>
-      <form onSubmit={handleRegister}>
+      <form onSubmit={handleRegister} encType="multipart/form-data">
         <input
           type="text"
           placeholder="Nombre"
@@ -57,6 +73,24 @@ const Register = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+        />
+        <input
+          type="tel"
+          placeholder="Teléfono"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          required
+        />
+        <input
+          type="text"
+          placeholder="Instagram"
+          value={instagram}
+          onChange={(e) => setInstagram(e.target.value)}
+        />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setPhoto(e.target.files[0])}
         />
         <button type="submit">Registrarse</button>
       </form>
