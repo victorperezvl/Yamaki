@@ -1,9 +1,9 @@
 import { useState } from "react";
-const API_URL = import.meta.env.VITE_URL_API;
+import { fetchRegister } from "../services/api";
 import "../styles/register.css"
 
 const Register = () => {
-  const [name, setName] = useState("");
+  const [user_name, setUser_name] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
@@ -15,39 +15,34 @@ const Register = () => {
     e.preventDefault();
     setMessage(""); 
 
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("email", email);
-    formData.append("password", password);
-    formData.append("phone", phone);
-    formData.append("instagram", instagram);
-    if (photo) {
-      formData.append("photo", photo);
+    const formData = {
+      user_name,
+      email,
+      password,
+      phone,
+      instagram,
+      photo
     }
-
+    
+    console.log("datos antes del fetch",formData)
+  
     try {
-      const response = await fetch(`${API_URL}register`, {
-        method: "POST",
-        body: formData, // Enviar datos como FormData para manejar imágenes
-      });
+      const data = await fetchRegister(formData);
 
-      const data = await response.json();
-      if (response.ok) {
-        setMessage("Registro exitoso. Ahora puedes iniciar sesión.");
-        setName("");
+      if (data.error) {
+            setMessage(data.error);}
+
+      setUser_name("");
         setEmail("");
         setPassword("");
         setPhone("");
         setInstagram("");
         setPhoto(null);
-      } else {
-        setMessage(data.message || "Error al registrar.");
-      }
     } catch (error) {
-      setMessage("Error al conectar con el servidor.");
-      console.error(error);
+        setMessage("Error al conectar con el servidor.");
+        console.error(error);
     }
-  };
+};
 
   return (
     <div className="register-container">
@@ -56,8 +51,8 @@ const Register = () => {
         <input
           type="text"
           placeholder="Nombre"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={user_name}
+          onChange={(e) => setUser_name(e.target.value)}
           required
         />
         <input

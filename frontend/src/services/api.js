@@ -105,3 +105,33 @@ export const fetchAppointments = async () => {
     }
 }
 
+export const fetchRegister = async ({ user_name, email, password, phone, instagram, photo }) => {
+    console.log("datos recibidos", user_name, email, password, phone, instagram, photo)
+    try {
+        const response = await fetch(`${API_URL}register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json', 
+            },
+            body: JSON.stringify({
+                user_name,
+                email,
+                password,
+                phone,
+                instagram,
+                photo
+            }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Error al registrar');
+        }
+
+        return await response.json();
+    } catch (error) {
+        throw new Error('Error en la solicitud: ' + error.message);
+    }
+};
+
+

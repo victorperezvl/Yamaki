@@ -53,11 +53,11 @@ const authController = {
     //Register
     register: async (req, res) => {
 
-        const {userName, email, password, phone, instagram, photo} = req.body;
+        const {user_name, email, password, phone, instagram, photo} = req.body;
 
         try {
            
-            if (!userName || !email || !password || !phone) {
+            if (!user_name || !email || !password || !phone) {
                 return res.status(400).json({ error: 'Campos sin rellenar' });
             }
 
@@ -75,7 +75,7 @@ const authController = {
 
             const [result] = await db.execute(
                 'INSERT INTO users (name, email, password, phone, instagram, photo_url) VALUES (?, ?, ?, ?, ?, ?)',
-                [userName, email, hashedPassword, phone, instagram, photoURL]
+                [user_name, email, hashedPassword, phone, instagram, photoURL]
 
             )
 
