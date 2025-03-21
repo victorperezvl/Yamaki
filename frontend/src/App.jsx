@@ -5,6 +5,7 @@ import Nav from "./components/Nav.jsx"
 import { AuthProvider } from "./components/AuthContext.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
 import LoginModal from "./components/Login.jsx";
+import Register from "./pages/Register.jsx";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cita" element={<Appointment />} />
+        <Route path="/registro" element={<Register />} />
         <Route
             path="/dashboard"
             element={

@@ -16,6 +16,7 @@ const Nav = () => {
           <a href="#servicios">Servicios</a>
           <a href="#galeria">Galería</a>
           <a href="#contacto">Contacto</a>
+          <a href="registro">Registro</a>
           <a href="/cita">CITA</a>
           <a href="#miPerfil">Mi perfil</a>
         </div>
