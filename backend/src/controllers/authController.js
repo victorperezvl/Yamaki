@@ -54,17 +54,16 @@ const authController = {
     register: async (req, res) => {
 
         const {user_name, email, password, phone, instagram, photo} = req.body;
-
         try {
            
             if (!user_name || !email || !password || !phone) {
                 return res.status(400).json({ error: 'Campos sin rellenar' });
             }
-
+    
             const [rows] = await db.execute('SELECT EXISTS (SELECT 1 FROM users WHERE email = ?) AS userExists',
                 [email]
             );    
-
+        
             if (rows[0].userExists) {
                 return res.status(400).json({ error: 'Este email ya existe' });
             }
