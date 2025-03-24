@@ -54,7 +54,8 @@ const Appointment = () => {
     : selectedDate;
 
     const onSuccess = () => {
-      setConfirmationMessage(`Cita confirmada el día ${selectedDate.toLocaleDateString()} a las ${selectedTime}`)
+      const dateObj = selectedDate instanceof Date ? selectedDate : new Date(selectedDate);
+      setConfirmationMessage(`Cita confirmada el día ${dateObj.toLocaleDateString()} a las ${selectedTime}`)
       setStep(4);
     }
     const onError = (message) => {

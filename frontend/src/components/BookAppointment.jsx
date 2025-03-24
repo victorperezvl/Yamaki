@@ -1,7 +1,6 @@
 import { fetchBookGuest, fetchBookLogged } from "../services/api";
 
 const bookAppointment = async ({ hairdresser, date, time, userId, guestInfo, isAuthenticated, token, onSuccess, onError }) => {
-    console.log("Datos recibidos en bookAppointment:", { hairdresser, date, time, userId, guestInfo, isAuthenticated, token });
     try {
         let response;
 
