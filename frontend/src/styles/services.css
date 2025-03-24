@@ -1,0 +1,85 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Contenedor principal */
+.services-container {
+    text-align: center;
+    background-color: black;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Barra roja superior para el título */
+.services-header {
+    background-color: #8B0000; /* Rojo oscuro */
+    height: 3cm; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Asegura que el título de la barra roja sea visible */
+.services-header h1 {
+    font-size: 40px; /* Ajuste para mejor visibilidad */
+    font-weight: bold;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: white !important; /* Asegura que el texto sea blanco */
+    position: relative;
+    z-index: 10;
+}
+
+/* Lista de servicios */
+.services-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    gap: 20px;
+}
+
+/* Cada servicio */
+.service-item {
+    font-size: 36px; /* Ajustado para mejor equilibrio */
+    font-weight: bold;
+    background-color: white;
+    padding: 20px 50px;
+    border-radius: 15px;
+    box-shadow: 0px 5px 15px rgba(255, 255, 255, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    max-width: 600px;
+    color: black;
+}
+
+/* Nombre del servicio */
+.service-name {
+    flex: 1;
+    text-align: left;
+}
+
+/* Precio en rojo */
+.service-price {
+    color: #d32f2f;
+    font-weight: bold;
+}
+
+.services-title {
+    font-size: 40px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white; /* Asegura que el texto sea blanco */
+    text-align: center;
+    margin-top: 20px;
+    position: relative;
+    z-index: 10;
+}
