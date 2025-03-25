@@ -147,10 +147,12 @@ export const fetchUsers = async (token) => {
         if (!response.ok) {
             throw new Error("Error al obtener datos de usuario");
         }
-        return await response.json();
+
+        const data = await response.json();
+        return data;
     } catch (error) {
         console.error("Error:", error);
-        return [];
+        return {};
     }
 
 }
