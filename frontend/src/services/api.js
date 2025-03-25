@@ -134,4 +134,11 @@ export const fetchRegister = async ({ user_name, email, password, phone, instagr
     }
 };
 
+// Fetch for get users
+export const fetchUsers = async () => {
+    try {
+        const response = await fetch(`${API_URL}appointments/pending`)
+    }
+
+}
 

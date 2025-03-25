@@ -17,15 +17,16 @@ router.post('/hairdresser/login', authHairdresser.login);
 router.post('/hairdresser/register', authHairdresser.register);
 router.post('/hairdresser/logout', authHairdresser.logout);
 
-//Routes appointments users
+//Routes for users
 router.post('/appointments', authMiddlewares.authenticateUser, userController.bookLogged);
 router.post('/appointments/guest', userController.bookGuest);
 router.delete('/appointments/:id', authMiddlewares.authenticateUser, userController.cancelAppointment);
 router.get('/appointments', authMiddlewares.authenticateUser, userController.getAppointment);
+router.get('/user', authMiddlewares.authenticateUser, userController.getProfile);
 router.get('/appointments/history', authMiddlewares.authenticateUser, userController.appointmentsHistory);
 router.get('/appointments/pending', userController.getAllAppointments);
 
-//Routes appointments hairdressers
+//Routes for hairdressers
 router.get ('/hairdresser', hairdresserController.getHairdressers);
 router.patch('/hairdresser/appointments', authMiddlewares.authenticateHairdresser, hairdresserController.confirmAppointment);
 router.delete('/hairdresser/appointments/:id', authMiddlewares.authenticateHairdresser, hairdresserController.cancelAppointment);

@@ -3,6 +3,29 @@ const sendEmail = require ('../email.js');
 
 const userController = {
 
+    // See profile
+    getProfile: async (req, res) => {
+
+        const user_id= req.user.id;
+
+        try {
+            const result = await db.execute (
+                'SELECT name, email, phone, instagram, points, photo_url, created_on FROM users WHERE id=?',
+            [user_id]
+        );
+
+        if (result === 0) {
+            return res.status(404).json({message: 'No se encuentra este usuario'});
+        }
+
+        res.json(result);
+
+        } catch (error) {
+            return res.status(500).json({error: 'No se ha podido consultar información'})
+        }
+
+    },
+
     //Book appointment for logged users
     bookLogged: async (req, res) => {
 
@@ -214,7 +237,7 @@ const userController = {
             'SELECT * FROM appointments WHERE status="pending"')
 
             if (result === 0) {
-                return res.status(401).json({error: 'No hay citas pendientes'})
+                return res.status(404).json({error: 'No hay citas pendientes'})
             } 
 
             res.json(result);
