@@ -135,9 +135,22 @@ export const fetchRegister = async ({ user_name, email, password, phone, instagr
 };
 
 // Fetch for get users
-export const fetchUsers = async () => {
+export const fetchUsers = async (token) => {
     try {
-        const response = await fetch(`${API_URL}appointments/pending`)
+        const response = await fetch(`${API_URL}user`, {           
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`, 
+             }
+        });
+
+        if (!response.ok) {
+            throw new Error("Error al obtener datos de usuario");
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Error:", error);
+        return [];
     }
 
 }
