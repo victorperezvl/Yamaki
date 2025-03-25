@@ -6,21 +6,40 @@ import "../styles/profile.css"
 const MiPerfil = () => {
   const [profile, setProfile] = useState(null);
   const {user} = useContext(AuthContext);
-  const token = user.token;
+  const [loading , setLoading] = useState(true);
+  const token = user?.token;
+
   
   useEffect(() => {
-    // Simulación de carga de datos desde la API
-    const loadData  = async () => {
-        const dataProfile = await fetchUsers(token);
-        setProfile(dataProfile);
-    }  
-    
-    loadData();
-  }, []);
+    const loadData = async () => {
+        if (token) {
+          try {
+            // Pasamos solo el token al fetch
+            const dataProfile = await fetchUsers(token);
+            setProfile(dataProfile);
+          } catch (error) {
+            console.error("Error al cargar los datos del perfil:", error);
+          } finally {
+            setLoading(false); // Indicamos que hemos terminado de cargar
+          }
+        }
+      };
+  
+      if (token) {
+        loadData(); // Llamamos la función asincrónica para cargar los datos
+      } else {
+        setLoading(false); // Si no hay token, terminamos la carga
+      }
+    }, [token]);
 
-  if (!profile) {
-    return <p>Cargando perfil...</p>;
-  }
+    if (loading) {
+      return <p>Cargando perfil...</p>;  // Mensaje de carga
+    }
+  
+    if (!profile) {
+      return <p>No se pudo cargar el perfil.</p>;  // Si no se carga el perfil, mostramos este mensaje
+    }
+  
 
   return (
     <div className="max-w-2xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
