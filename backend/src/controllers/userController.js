@@ -17,8 +17,8 @@ const userController = {
         if (result === 0) {
             return res.status(404).json({message: 'No se encuentra este usuario'});
         }
-
-        res.json(result);
+    
+        res.json(result[0]);
 
         } catch (error) {
             return res.status(500).json({error: 'No se ha podido consultar información'})

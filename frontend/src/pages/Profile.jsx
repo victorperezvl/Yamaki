@@ -8,27 +8,29 @@ const MiPerfil = () => {
   const {user} = useContext(AuthContext);
   const [loading , setLoading] = useState(true);
   const token = user?.token;
-
+  console.log("Componente Profile montado");
   
   useEffect(() => {
     const loadData = async () => {
         if (token) {
           try {
-            // Pasamos solo el token al fetch
+
             const dataProfile = await fetchUsers(token);
             setProfile(dataProfile);
+
           } catch (error) {
             console.error("Error al cargar los datos del perfil:", error);
           } finally {
-            setLoading(false); // Indicamos que hemos terminado de cargar
+            setLoading(false); 
           }
         }
       };
+      console.log("Token: ", token);
   
       if (token) {
-        loadData(); // Llamamos la función asincrónica para cargar los datos
+        loadData(); 
       } else {
-        setLoading(false); // Si no hay token, terminamos la carga
+        setLoading(false); 
       }
     }, [token]);
 
@@ -36,30 +38,31 @@ const MiPerfil = () => {
       return <p>Cargando perfil...</p>;  // Mensaje de carga
     }
   
-    if (!profile) {
-      return <p>No se pudo cargar el perfil.</p>;  // Si no se carga el perfil, mostramos este mensaje
+    if (!profile || Object.keys(profile).length === 0) {
+      return <p>No se pudo cargar el perfil.</p>;
     }
-  
+
+    const myProfile = profile[0];
 
   return (
     <div className="max-w-2xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
       <div className="flex items-center">
         <img
-          src={profile.photo_url || "/default-profile.png"}
+          src={myProfile.photo_url || "/default-profile.png"}
           alt="Foto de perfil"
           className="w-24 h-24 rounded-full border"
         />
         <div className="ml-6">
-          <h2 className="text-2xl font-semibold">{profile.name}</h2>
-          <p className="text-gray-600">{profile.email}</p>
+          <h2 className="text-2xl font-semibold">{myProfile.name}</h2>
+          <p className="text-gray-600">{myProfile.email}</p>
         </div>
       </div>
 
       <div className="mt-6 space-y-2">
-        <p><strong>Teléfono:</strong> {profile.phone || "No especificado"}</p>
-        <p><strong>Instagram:</strong> {profile.instagram ? `@${profile.instagram}` : "No especificado"}</p>
-        <p><strong>Puntos:</strong> {profile.points}</p>
-        <p><strong>Usuario desde:</strong> {new Date(profile.created_on).toLocaleDateString()}</p>
+        <p><strong>Teléfono:</strong> {myProfile.phone || "No especificado"}</p>
+        <p><strong>Instagram:</strong> {myProfile.instagram ? `@${profile.instagram}` : "No especificado"}</p>
+        <p><strong>Puntos:</strong> {myProfile.points}</p>
+        <p><strong>Usuario desde:</strong> {new Date(myProfile.created_on).toLocaleDateString()}</p>
       </div>
 
       <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
