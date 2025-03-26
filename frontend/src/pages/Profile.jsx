@@ -39,7 +39,7 @@ const MiPerfil = () => {
     }
   
     if (!profile || Object.keys(profile).length === 0) {
-      return <p>No se pudo cargar el perfil.</p>;
+      return <p>Inicia sesión o regístrate para ver tu perfil</p>;
     }
 
     const myProfile = profile[0];
