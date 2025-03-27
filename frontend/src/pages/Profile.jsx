@@ -1,73 +1,135 @@
 import { useEffect, useState, useContext } from "react";
-import { fetchUsers } from "../services/api";
+import { fetchUsers, fetchUpdateProfile } from "../services/api"; 
 import AuthContext from "../components/AuthContext.jsx";
-import "../styles/profile.css"
+import "../styles/profile.css";
+import { FaEdit } from "react-icons/fa"; 
 
 const MiPerfil = () => {
   const [profile, setProfile] = useState(null);
-  const {user} = useContext(AuthContext);
-  const [loading , setLoading] = useState(true);
+  const { user } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedProfile, setEditedProfile] = useState({});
   const token = user?.token;
-  console.log("Componente Profile montado");
-  
+
   useEffect(() => {
     const loadData = async () => {
-        if (token) {
-          try {
-
-            const dataProfile = await fetchUsers(token);
-            setProfile(dataProfile);
-
-          } catch (error) {
-            console.error("Error al cargar los datos del perfil:", error);
-          } finally {
-            setLoading(false); 
-          }
-        }
-      };
-      console.log("Token: ", token);
-  
       if (token) {
-        loadData(); 
+        try {
+          const dataProfile = await fetchUsers(token);
+          setProfile(dataProfile[0]); 
+          setEditedProfile(dataProfile[0]); 
+        } catch (error) {
+          console.error("Error al cargar los datos del perfil:", error);
+        } finally {
+          setLoading(false);
+        }
       } else {
-        setLoading(false); 
+        setLoading(false);
       }
-    }, [token]);
+    };
 
-    if (loading) {
-      return <p>Cargando perfil...</p>;  // Mensaje de carga
+    if (token) {
+      loadData();
     }
+  }, [token]);
+
+  if (loading) {
+    return <p>Cargando perfil...</p>;
+  }
+
+  if (!profile) {
+    return <p>Inicia sesión o regístrate para ver tu perfil</p>;
+  }
+
+  const handleChange = (e) => {
+    setEditedProfile({ ...editedProfile, [e.target.name]: e.target.value });
+  };
+
+  const handleSave = async () => {
+    try {
+      await fetchUpdateProfile({
+        name: editedProfile.name,
+        email: editedProfile.email,
+        phone: editedProfile.phone,
+        instagram: editedProfile.instagram,
+        token: token,  
+      });
   
-    if (!profile || Object.keys(profile).length === 0) {
-      return <p>Inicia sesión o regístrate para ver tu perfil</p>;
+      setProfile(editedProfile);
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Error al actualizar el perfil:", error);
     }
-
-    const myProfile = profile[0];
+  };
+  
 
   return (
     <div className="max-w-2xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
       <div className="flex items-center">
         <img
-          src={myProfile.photo_url || "/default-profile.png"}
+          src={profile.photo_url || "/default-profile.png"}
           alt="Foto de perfil"
           className="w-24 h-24 rounded-full border"
         />
         <div className="ml-6">
-          <h2 className="text-2xl font-semibold">{myProfile.name}</h2>
-          <p className="text-gray-600">{myProfile.email}</p>
+          {isEditing ? (
+            <input
+              type="text"
+              name="name"
+              value={editedProfile.name}
+              onChange={handleChange}
+              className="border px-2 py-1"
+            />
+          ) : (
+            <h2 className="text-2xl font-semibold">{profile.name}</h2>
+          )}
+          <p className="text-gray-600">{profile.email}</p>
         </div>
       </div>
 
       <div className="mt-6 space-y-2">
-        <p><strong>Teléfono:</strong> {myProfile.phone || "No especificado"}</p>
-        <p><strong>Instagram:</strong> {myProfile.instagram ? `@${profile.instagram}` : "No especificado"}</p>
-        <p><strong>Puntos:</strong> {myProfile.points}</p>
-        <p><strong>Usuario desde:</strong> {new Date(myProfile.created_on).toLocaleDateString()}</p>
+        <div className="flex items-center">
+          <p><strong>Teléfono:</strong></p>
+          {isEditing ? (
+            <input
+              type="text"
+              name="phone"
+              value={editedProfile.phone || ""}
+              onChange={handleChange}
+              className="border ml-2 px-2 py-1"
+            />
+          ) : (
+            <p className="ml-2">{profile.phone || "No especificado"}</p>
+          )}
+          <FaEdit className="ml-2 text-blue-500 cursor-pointer" onClick={() => setIsEditing(true)} />
+        </div>
+
+        <div className="flex items-center">
+          <p><strong>Instagram:</strong></p>
+          {isEditing ? (
+            <input
+              type="text"
+              name="instagram"
+              value={editedProfile.instagram || ""}
+              onChange={handleChange}
+              className="border ml-2 px-2 py-1"
+            />
+          ) : (
+            <p className="ml-2">@{profile.instagram || "No especificado"}</p>
+          )}
+          <FaEdit className="ml-2 text-blue-500 cursor-pointer" onClick={() => setIsEditing(true)} />
+        </div>
+
+        <p><strong>Puntos:</strong> {profile.points}</p>
+        <p><strong>Usuario desde:</strong> {new Date(profile.created_on).toLocaleDateString()}</p>
       </div>
 
-      <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-        Editar perfil
-      </button>
+      {isEditing && (
+        <button onClick={handleSave} className="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+          Guardar cambios
+        </button>
+      )}
     </div>
   );
 };

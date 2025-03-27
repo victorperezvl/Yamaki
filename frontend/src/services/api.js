@@ -137,7 +137,6 @@ export const fetchRegister = async ({ user_name, email, password, phone, instagr
 
 // Fetch for get users
 export const fetchUsers = async (token) => {
-    console.log("TOKEN FETCH", token)
     try {
         const response = await fetch(`${API_URL}user`, {           
             method: 'GET',
@@ -159,3 +158,32 @@ export const fetchUsers = async (token) => {
 
 }
 
+// Fecth for update profile
+export const fetchUpdateProfile =  async ({ name, email, phone, instagram, token }) => {
+    try {
+        const response = await fetch(`${API_URL}user/update`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`  
+            },
+            body: JSON.stringify({
+                name,
+                email,
+                phone,
+                instagram
+            }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Error al actualizar el perfil');
+        }
+
+        return await response.json();
+        
+    } catch (error) {
+        throw new Error('Error en la solicitud: ' + error.message);
+    }
+
+}
