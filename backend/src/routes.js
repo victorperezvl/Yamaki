@@ -23,6 +23,7 @@ router.post('/appointments/guest', userController.bookGuest);
 router.delete('/appointments/:id', authMiddlewares.authenticateUser, userController.cancelAppointment);
 router.get('/appointments', authMiddlewares.authenticateUser, userController.getAppointment);
 router.get('/user', authMiddlewares.authenticateUser, userController.getProfile);
+router.post('/user/update', authMiddlewares.authenticateUser, userController.updateProfile);
 router.get('/appointments/history', authMiddlewares.authenticateUser, userController.appointmentsHistory);
 router.get('/appointments/pending', userController.getAllAppointments);
 

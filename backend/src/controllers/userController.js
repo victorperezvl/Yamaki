@@ -26,6 +26,50 @@ const userController = {
 
     },
 
+    //Update data profile 
+    updateProfile: async (req, res) => {
+
+        const user_id = req.user.id;
+        const {name, email, phone, instagram} = req.body;
+
+
+        try {
+             const [rows] = await db.execute (
+                'SELECT name, email, phone, instagram FROM users WHERE id=?',
+                [user_id]
+             )
+
+             if (rows === 0) {
+                res.status(400).json({message: 'No se encuentra el usuario'})
+             }
+
+             const actualUser = rows[0];
+
+             const newName = name !== null ? name : actualUser.name;
+             const newEmail = email !== null ? email : actualUser.email;
+             const newPhone = phone !== null ? phone : actualUser.phone;
+             const newInstagram = instagram !== null ? instagram : actualUser.instagram;
+
+            await db.execute (
+                `UPDATE users 
+                SET 
+                    name = COALESCE(?, name), 
+                    email = COALESCE(?, email), 
+                    phone = COALESCE(?, phone),
+                    instagram = COALESCE(?, instagram) 
+                WHERE id = ?`,
+                [newName, newEmail, newPhone, newInstagram, user_id]
+            );
+
+    
+            res.json({ message: 'Datos actualizados' });         
+        
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: 'No se ha podido realizar la operación' })      
+        }
+    },
+
     //Book appointment for logged users
     bookLogged: async (req, res) => {
 
