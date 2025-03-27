@@ -25,8 +25,6 @@ const Register = () => {
       photo,
     };
 
-    console.log("datos antes del fetch", formData);
-
     try {
       const data = await fetchRegister(formData);
 
@@ -37,7 +35,7 @@ const Register = () => {
         setIsRegistered(true); // Cambiamos el estado para ocultar el formulario
       }
     } catch (error) {
-      setMessage("❌ Error al conectar con el servidor.");
+      setMessage("❌ Este usuario ya existe");
       console.error(error);
     }
   };

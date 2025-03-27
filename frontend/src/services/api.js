@@ -106,7 +106,7 @@ export const fetchAppointments = async () => {
 }
 
 export const fetchRegister = async ({ user_name, email, password, phone, instagram, photo }) => {
-    console.log("datos recibidos", user_name, email, password, phone, instagram, photo)
+
     try {
         const response = await fetch(`${API_URL}register`, {
             method: 'POST',
@@ -126,6 +126,7 @@ export const fetchRegister = async ({ user_name, email, password, phone, instagr
         if (!response.ok) {
             const errorData = await response.json();
             throw new Error(errorData.message || 'Error al registrar');
+            
         }
 
         return await response.json();
