@@ -53,10 +53,10 @@ const userController = {
             await db.execute (
                 `UPDATE users 
                 SET 
-                    name = COALESCE(?, name), 
-                    email = COALESCE(?, email), 
-                    phone = COALESCE(?, phone),
-                    instagram = COALESCE(?, instagram) 
+                    name = ?, 
+                    email = ?, 
+                    phone = ?,
+                    instagram = ? 
                 WHERE id = ?`,
                 [newName, newEmail, newPhone, newInstagram, user_id]
             );
