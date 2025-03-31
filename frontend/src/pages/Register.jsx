@@ -2,6 +2,7 @@ import { useState } from "react";
 import { fetchRegister } from "../services/api";
 import "../styles/register.css";
 
+//Register page
 const Register = () => {
   const [user_name, setUser_name] = useState("");
   const [email, setEmail] = useState("");
@@ -32,7 +33,7 @@ const Register = () => {
         setMessage(data.error);
       } else {
         setMessage("✅ REGISTRO REALIZADO CON ÉXITO!");
-        setIsRegistered(true); // Cambiamos el estado para ocultar el formulario
+        setIsRegistered(true); 
       }
     } catch (error) {
       setMessage("❌ Este usuario ya existe");

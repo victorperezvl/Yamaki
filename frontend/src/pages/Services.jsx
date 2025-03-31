@@ -1,5 +1,6 @@
 import "../styles/services.css";
 
+//Information of services page
 const services = [
   { name: "Corte", price: 13 },
   { name: "Corte y Barba", price: 15 },

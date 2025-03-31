@@ -4,6 +4,7 @@ import AuthContext from "../components/AuthContext.jsx";
 import "../styles/profile.css";
 import { FaEdit } from "react-icons/fa"; 
 
+//My profile page
 const MiPerfil = () => {
   const [profile, setProfile] = useState(null);
   const { user } = useContext(AuthContext);

@@ -14,7 +14,7 @@ export const AuthProvider = ({children}) => {
     }, []);
 
     const login = (user) => {
-      localStorage.setItem("user", JSON.stringify(user)); // Guarda el objeto completo
+      localStorage.setItem("user", JSON.stringify(user)); 
       setUser(user);
     };
   

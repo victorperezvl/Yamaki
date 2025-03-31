@@ -3,6 +3,7 @@ import Login from "../components/Login.jsx"
 import userIcon from "../assets/iconUser.png"; 
 import "../styles/nav.css"; 
 
+//Component for nav bar
 const Nav = () => {
 
   const [showLogin, setShowLogin] = useState(false);

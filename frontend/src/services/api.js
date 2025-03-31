@@ -1,7 +1,7 @@
 const API_URL = import.meta.env.VITE_URL_API;
 
 
-//Fetch for get hairdressers
+//Fetch to get hairdressers
 export const fetchHairdressers = async () => {
     try {
         const response = await fetch (`${API_URL}/hairdresser`);
@@ -17,7 +17,7 @@ export const fetchHairdressers = async () => {
     
 }
 
-//Fetch for get services
+//Fetch to get services
 export const fetchServices = async () => {
     try {
         const response = await fetch (`${API_URL}/services`);
@@ -32,7 +32,7 @@ export const fetchServices = async () => {
     }
 }
 
-// Reservar cita para invitados
+//Fetch to book appointments for guest users
 export const fetchBookGuest = async ({ email, phone, name, hairdresser_id, date, service_id, time }) => {
     try {
         const response = await fetch(`${API_URL}appointments/guest`, {
@@ -62,7 +62,7 @@ export const fetchBookGuest = async ({ email, phone, name, hairdresser_id, date,
     }
 };
 
-// Reservar cita para usuarios autenticados
+//Fetch to book appointments for logged users
 export const fetchBookLogged = async ({ user_id, hairdresser_id, date, time, service_id, token }) => {
     try {
         const response = await fetch(`${API_URL}appointments`, {
@@ -92,7 +92,7 @@ export const fetchBookLogged = async ({ user_id, hairdresser_id, date, time, ser
 };
 
 
-// Fetch for get booked appointments
+// Fetch to get booked appointments
 export const fetchAppointments = async () => {
     try {
         const response = await fetch (`${API_URL}appointments/pending`);
@@ -107,6 +107,7 @@ export const fetchAppointments = async () => {
     }
 }
 
+//Fetch to register users
 export const fetchRegister = async ({ user_name, email, password, phone, instagram, photo }) => {
 
     try {
@@ -137,7 +138,7 @@ export const fetchRegister = async ({ user_name, email, password, phone, instagr
     }
 };
 
-// Fetch for get users
+// Fetch to get users
 export const fetchUsers = async (token) => {
     try {
         const response = await fetch(`${API_URL}user`, {           
@@ -160,7 +161,7 @@ export const fetchUsers = async (token) => {
 
 }
 
-// Fecth for update profile
+// Fecth to update profile
 export const fetchUpdateProfile =  async ({ name, email, phone, instagram, token }) => {
     try {
         const response = await fetch(`${API_URL}user/update`, {

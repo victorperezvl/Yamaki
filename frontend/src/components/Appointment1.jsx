@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import { fetchHairdressers, fetchServices } from "../services/api";
 
+//Handle first step to book the appointment
 const Appointment1 = ( {handleNext} ) => {
 
   const [selectedHairdresser, setSelectedHairdresser] = useState('');
@@ -84,7 +85,7 @@ const Appointment1 = ( {handleNext} ) => {
 };
 
 Appointment1.propTypes = {
-  handleNext: PropTypes.func.isRequired, // Debe ser una función obligatoria
+  handleNext: PropTypes.func.isRequired, 
 };
 
 export default Appointment1;

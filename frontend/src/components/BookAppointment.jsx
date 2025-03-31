@@ -1,11 +1,12 @@
 import { fetchBookGuest, fetchBookLogged } from "../services/api";
 
+//Function for book appointments
 const bookAppointment = async ({ hairdresser, date, time, userId, service, guestInfo, isAuthenticated, token, onSuccess, onError }) => {
     try {
         let response;
 
         if (isAuthenticated) {
-            // Usuario autenticado
+            //Logged user
             response = await fetchBookLogged({ 
                 user_id: userId,
                 hairdresser_id: hairdresser, 
@@ -15,7 +16,7 @@ const bookAppointment = async ({ hairdresser, date, time, userId, service, guest
                 token
             });
         } else {
-            // Usuario invitado
+            //Guest user
             response = await fetchBookGuest({ 
                 email: guestInfo.email, 
                 phone: guestInfo.phone, 

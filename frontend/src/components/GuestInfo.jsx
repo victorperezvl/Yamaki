@@ -1,6 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 
+//Form that collects the details for booking an appointment for a guest user (name, email and phone)
 const GuestInfo = ({ onConfirm }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

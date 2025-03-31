@@ -4,6 +4,7 @@ const API_URL = import.meta.env.VITE_URL_API;
 import AuthContext from "./AuthContext";
 import "../styles/login.css";
 
+//Component for user login
 const LoginModal = ({ show, onClose }) => {
 
   const {login, logout} = useContext(AuthContext);
@@ -37,7 +38,7 @@ const LoginModal = ({ show, onClose }) => {
   };
 
   const handleLogout = () => {
-    logout(); // Llamar a la función logout del contexto
+    logout(); 
     alert("Has cerrado sesión");
   };
 

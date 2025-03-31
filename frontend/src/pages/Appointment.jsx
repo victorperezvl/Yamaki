@@ -7,6 +7,8 @@ import BookAppointment from "../components/BookAppointment.jsx";
 import PropTypes from "prop-types";
 import AuthContext from "../components/AuthContext.jsx";
 
+
+//Page for book appointment
 const Appointment = () => {
   const [step, setStep] = useState(1);
   const {user} = useContext(AuthContext);
@@ -18,7 +20,7 @@ const Appointment = () => {
   const [guestInfo, setGuestInfo] = useState({ name: "", email: "", phone: "" });
   const [confirmationMessage, setConfirmationMessage] = useState ("");
 
-  // Paso 1: Selección de peluquero y servicio
+  //Step 1: selected hairdresser and service
   const handleNext = (hairdresser, service) => {
     if (hairdresser && service) {
       setSelectedHairdresser(hairdresser);
@@ -29,14 +31,14 @@ const Appointment = () => {
     }
   };
 
-  // Paso 2: Selección de fecha y hora
+  //Step 2: selected date and time 
   const handleDateSelect = ({ fecha, hora }) => {
     setSelectedDate(fecha);
     setSelectedTime(hora);
     setStep(3);
   };
 
-  // Paso 3: Para invitados → Recoger datos antes de confirmar
+  //(Only for guest user) Step 3: form that collects the details for booking an appointment for a guest user
   const handleGuestConfirm = (guestData) => {
     if (!guestData || !guestData.name || !guestData.email || !guestData.phone) {
       alert("Error: Faltan datos del invitado.");
@@ -46,7 +48,7 @@ const Appointment = () => {
     handleConfirmAppointment(guestData);
   };
 
-  // Paso 3: Confirmar cita para usuarios autenticados o invitados
+  //Steo 3: Confirm appointment for authenticated or invited users
   const handleConfirmAppointment = (extraData = {}) => {
 
     const formattedDate = selectedDate instanceof Date 

@@ -1,6 +1,7 @@
 import "../styles/Home.css";
 import homeImg from "../assets/peluqueria.png";
 
+//Home page
 const Home = () => {
  return (
     <div>
