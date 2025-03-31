@@ -6,7 +6,7 @@ const servicesController = {
     getServices: async (req, res) => {
 
         try {
-            const [result] = await db.execute('SELECT name FROM services')
+            const [result] = await db.execute('SELECT id, name FROM services')
 
             if (result.length === 0 ) {
                 return res.status(403).json({error: 'No se pueden mostrar los servicios'});

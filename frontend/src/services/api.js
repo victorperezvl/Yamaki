@@ -33,7 +33,7 @@ export const fetchServices = async () => {
 }
 
 // Reservar cita para invitados
-export const fetchBookGuest = async ({ email, phone, name, hairdresser_id, date, time }) => {
+export const fetchBookGuest = async ({ email, phone, name, hairdresser_id, date, service_id, time }) => {
     try {
         const response = await fetch(`${API_URL}appointments/guest`, {
             method: 'POST',
@@ -46,7 +46,8 @@ export const fetchBookGuest = async ({ email, phone, name, hairdresser_id, date,
                 name,
                 hairdresser_id,
                 date,
-                time
+                time,
+                service_id
             }),
         });
 
@@ -62,7 +63,7 @@ export const fetchBookGuest = async ({ email, phone, name, hairdresser_id, date,
 };
 
 // Reservar cita para usuarios autenticados
-export const fetchBookLogged = async ({ user_id, hairdresser_id, date, time, token }) => {
+export const fetchBookLogged = async ({ user_id, hairdresser_id, date, time, service_id, token }) => {
     try {
         const response = await fetch(`${API_URL}appointments`, {
             method: 'POST',
@@ -74,7 +75,8 @@ export const fetchBookLogged = async ({ user_id, hairdresser_id, date, time, tok
                 user_id,
                 hairdresser_id,
                 date,
-                time
+                time,
+                service_id
             }),
         });
 

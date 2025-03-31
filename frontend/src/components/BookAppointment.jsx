@@ -1,6 +1,6 @@
 import { fetchBookGuest, fetchBookLogged } from "../services/api";
 
-const bookAppointment = async ({ hairdresser, date, time, userId, guestInfo, isAuthenticated, token, onSuccess, onError }) => {
+const bookAppointment = async ({ hairdresser, date, time, userId, service, guestInfo, isAuthenticated, token, onSuccess, onError }) => {
     try {
         let response;
 
@@ -11,6 +11,7 @@ const bookAppointment = async ({ hairdresser, date, time, userId, guestInfo, isA
                 hairdresser_id: hairdresser, 
                 date, 
                 time, 
+                service_id: service,
                 token
             });
         } else {
@@ -22,6 +23,7 @@ const bookAppointment = async ({ hairdresser, date, time, userId, guestInfo, isA
                 hairdresser_id: hairdresser, 
                 date, 
                 time,
+                service_id: service,
                 token 
             });
         }
