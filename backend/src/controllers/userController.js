@@ -74,7 +74,7 @@ const userController = {
     bookLogged: async (req, res) => {
 
         const user_id = req.user.id;
-        const {hairdresser_id, date, time} = req.body;
+        const {hairdresser_id, date, time, service_id} = req.body;
         const connection = await db.getConnection();
 
         try {
@@ -92,9 +92,9 @@ const userController = {
             }
     
             await connection.execute(
-                `INSERT INTO appointments (user_id, hairdresser_id, appointment_date, appointment_time, status) 
-                 VALUES (?, ?, ?, ?, 'pending')`,
-                [user_id, hairdresser_id, date, time]
+                `INSERT INTO appointments (user_id, hairdresser_id, appointment_date, appointment_time, service_id, status) 
+                 VALUES (?, ?, ?, ?, ?, 'pending')`,
+                [user_id, hairdresser_id, date, time, service_id]
             );
             
             await connection.commit();
@@ -136,7 +136,7 @@ const userController = {
     //Book appointment for guest users
     bookGuest: async (req, res) => {
 
-        const {email, phone, name, hairdresser_id, date, time} = req.body;
+        const {email, phone, name, hairdresser_id, date, time, service_id} = req.body;
         const connection = await db.getConnection();
 
         try {
@@ -158,8 +158,8 @@ const userController = {
             }
 
             await connection.execute(
-                'INSERT INTO appointments (guest_email, guest_phone, guest_name, hairdresser_id, appointment_date, appointment_time, status) VALUES (?, ?, ?, ?, ?, ?, "pending")',
-                [email, phone, name, hairdresser_id, date, time]          
+                'INSERT INTO appointments (guest_email, guest_phone, guest_name, hairdresser_id, appointment_date, appointment_time, service_id, status) VALUES (?, ?, ?, ?, ?, ?, ?, "pending")',
+                [email, phone, name, hairdresser_id, date, time, service_id]          
             );
 
             await connection.commit();
