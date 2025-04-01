@@ -35,12 +35,13 @@ const MiPerfil = () => {
     }
   }, [token]);
 
-  if (loading) {
-    return <p>Cargando perfil...</p>;
-  }
 
   if (!profile) {
     return <p>Inicia sesión o regístrate para ver tu perfil</p>;
+  }
+
+  if (loading) {
+    return <p>Cargando perfil...</p>;
   }
 
   const handleChange = (e) => {

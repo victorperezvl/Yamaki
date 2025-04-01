@@ -31,7 +31,7 @@ const Calen = ({ onSelectDate }) => {
           throw new Error("La API no devolvió un array");
         }
 
-        setCitasOcupadas(data); // Guardar las citas en el estado
+        setCitasOcupadas(data);
       } catch (error) {
         console.error("Error al cargar citas:", error);
       }
