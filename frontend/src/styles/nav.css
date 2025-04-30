@@ -1,18 +1,114 @@
+/* Resetear márgenes y padding de todos los elementos */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* General Nav Bar Styling */
 .nav {
-    background-color: black;
+  background-color: #333; /* Color de fondo de la barra */
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 30px;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle un efecto elevado */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100; /* Asegura que la barra esté encima de otros elementos */
+  font-family: 'Poppins', sans-serif; /* Fuente moderna */
+}
+
+/* Logo */
+.logo {
+  font-size: 1.8rem;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 2px;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Contenedor del menú */
+.menu-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Menú de navegación */
+.menu {
+  display: flex;
+  gap: 20px;
+}
+
+.nav a {
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: background-color 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.nav a:hover {
+  background-color: #575757;
+  border-radius: 5px;
+}
+
+/* Estilo del botón de usuario */
+.user-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.user-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+/* Solucionar el problema de la superposición y el espacio blanco */
+body {
+  margin-top: 0; /* Elimina cualquier margen superior */
+  
+}
+
+/* Estilos responsivos para pantallas pequeñas */
+@media (max-width: 768px) {
+  .menu {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #333;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    left: 0;
+    padding: 20px;
+  }
+
+  .menu-container.open .menu {
     display: flex;
-    justify-content: space-between;
-    padding: 10px 20px;
-    align-items: center;
   }
-  
-  .nav a {
-    color: white;
-    text-decoration: none;
-    padding: 10px;
+
+  .hamburger {
+    display: flex;
   }
-  
-  .nav a:hover {
+
+  .menu a {
+    font-size: 18px;
+    text-align: center;
+    padding: 12px;
+    width: 100%;
+  }
+
+  .menu-container.open .menu a:hover {
     background-color: #575757;
-    border-radius: 5px;
   }
+}
+

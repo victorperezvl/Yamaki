@@ -4,7 +4,7 @@ import AuthContext from "../components/AuthContext.jsx";
 import "../styles/profile.css";
 import { FaEdit } from "react-icons/fa"; 
 
-//My profile page
+// My profile page
 const MiPerfil = () => {
   const [profile, setProfile] = useState(null);
   const { user } = useContext(AuthContext);
@@ -35,7 +35,6 @@ const MiPerfil = () => {
     }
   }, [token]);
 
-
   if (!profile) {
     return <p>Inicia sesión o regístrate para ver tu perfil</p>;
   }
@@ -64,34 +63,33 @@ const MiPerfil = () => {
       console.error("Error al actualizar el perfil:", error);
     }
   };
-  
 
   return (
-    <div className="max-w-2xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
-      <div className="flex items-center">
+    <div className="profile-container">
+      <div className="profile-header">
         <img
           src={profile.photo_url || "/default-profile.png"}
           alt="Foto de perfil"
-          className="w-24 h-24 rounded-full border"
+          className="profile-img"
         />
-        <div className="ml-6">
+        <div className="profile-info">
           {isEditing ? (
             <input
               type="text"
               name="name"
               value={editedProfile.name}
               onChange={handleChange}
-              className="border px-2 py-1"
+              className="profile-input"
             />
           ) : (
-            <h2 className="text-2xl font-semibold">{profile.name}</h2>
+            <h2 className="profile-name">{profile.name}</h2>
           )}
-          <p className="text-gray-600">{profile.email}</p>
+          <p className="profile-email">{profile.email}</p>
         </div>
       </div>
 
-      <div className="mt-6 space-y-2">
-        <div className="flex items-center">
+      <div className="profile-details">
+        <div className="profile-detail">
           <p><strong>Teléfono:</strong></p>
           {isEditing ? (
             <input
@@ -99,15 +97,15 @@ const MiPerfil = () => {
               name="phone"
               value={editedProfile.phone || ""}
               onChange={handleChange}
-              className="border ml-2 px-2 py-1"
+              className="profile-input"
             />
           ) : (
-            <p className="ml-2">{profile.phone || "No especificado"}</p>
+            <p>{profile.phone || "No especificado"}</p>
           )}
-          <FaEdit className="ml-2 text-blue-500 cursor-pointer" onClick={() => setIsEditing(true)} />
+          <FaEdit className="edit-icon" onClick={() => setIsEditing(true)} />
         </div>
 
-        <div className="flex items-center">
+        <div className="profile-detail">
           <p><strong>Instagram:</strong></p>
           {isEditing ? (
             <input
@@ -115,12 +113,12 @@ const MiPerfil = () => {
               name="instagram"
               value={editedProfile.instagram || ""}
               onChange={handleChange}
-              className="border ml-2 px-2 py-1"
+              className="profile-input"
             />
           ) : (
-            <p className="ml-2">@{profile.instagram || "No especificado"}</p>
+            <p>@{profile.instagram || "No especificado"}</p>
           )}
-          <FaEdit className="ml-2 text-blue-500 cursor-pointer" onClick={() => setIsEditing(true)} />
+          <FaEdit className="edit-icon" onClick={() => setIsEditing(true)} />
         </div>
 
         <p><strong>Puntos:</strong> {profile.points}</p>
@@ -128,7 +126,7 @@ const MiPerfil = () => {
       </div>
 
       {isEditing && (
-        <button onClick={handleSave} className="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+        <button onClick={handleSave} className="save-button">
           Guardar cambios
         </button>
       )}

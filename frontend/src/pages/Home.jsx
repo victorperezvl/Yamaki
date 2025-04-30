@@ -1,16 +1,17 @@
 import "../styles/Home.css";
 import homeImg from "../assets/peluqueria.png";
 
-//Home page
+// Home page
 const Home = () => {
- return (
-    <div>
-        <div className="home-container">
-          <h1 className="homeTxt">Bienvenido a Yamaki</h1>
-          <img src={homeImg} alt="Imagenportada" className="homeImg" />
-        </div>
+  return (
+    <div className="home-container">
+      <div className="home-content">
+        <h1 className="homeTxt">Bienvenido a Yamaki</h1>
+        <img src={homeImg} alt="Imagen portada" className="homeImg" />
+      </div>
     </div>
   );
 };
 
 export default Home;
+

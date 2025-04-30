@@ -7,20 +7,19 @@ import BookAppointment from "../components/BookAppointment.jsx";
 import PropTypes from "prop-types";
 import AuthContext from "../components/AuthContext.jsx";
 
-
-//Page for book appointment
+// Page for book appointment
 const Appointment = () => {
   const [step, setStep] = useState(1);
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const isAuthenticated = user !== null;
   const [selectedHairdresser, setSelectedHairdresser] = useState("");
   const [selectedService, setSelectedService] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState("");
   const [guestInfo, setGuestInfo] = useState({ name: "", email: "", phone: "" });
-  const [confirmationMessage, setConfirmationMessage] = useState ("");
+  const [confirmationMessage, setConfirmationMessage] = useState("");
 
-  //Step 1: selected hairdresser and service
+  // Step 1: selected hairdresser and service
   const handleNext = (hairdresser, service) => {
     if (hairdresser && service) {
       setSelectedHairdresser(hairdresser);
@@ -31,7 +30,7 @@ const Appointment = () => {
     }
   };
 
-  //Step 2: selected date and time 
+  // Step 2: selected date and time
   const handleDateSelect = ({ fecha, hora }) => {
     setSelectedDate(fecha);
     setSelectedTime(hora);
@@ -48,26 +47,25 @@ const Appointment = () => {
     handleConfirmAppointment(guestData);
   };
 
-  //Steo 3: Confirm appointment for authenticated or invited users
+  // Step 3: Confirm appointment for authenticated or invited users
   const handleConfirmAppointment = (extraData = {}) => {
-
     const formattedDate = selectedDate instanceof Date 
-    ? selectedDate.toISOString().split("T")[0] 
-    : selectedDate;
+      ? selectedDate.toISOString().split("T")[0] 
+      : selectedDate;
 
     const onSuccess = () => {
       const dateObj = selectedDate instanceof Date ? selectedDate : new Date(selectedDate);
-      setConfirmationMessage(`Cita confirmada el día ${dateObj.toLocaleDateString()} a las ${selectedTime}`)
+      setConfirmationMessage(`Cita confirmada el día ${dateObj.toLocaleDateString()} a las ${selectedTime}`);
       setStep(4);
-    }
+    };
+
     const onError = (message) => {
       alert(message);
-    }
-
+    };
 
     let appointmentData;
 
-    if (isAuthenticated){
+    if (isAuthenticated) {
       appointmentData = {
         hairdresser: selectedHairdresser,
         service: selectedService,
@@ -78,58 +76,55 @@ const Appointment = () => {
         token: user.token,
         onSuccess,
         onError
-      }
+      };
     } else {
       const name = extraData.name || guestInfo.name;
       const email = extraData.email || guestInfo.email;
       const phone = extraData.phone || guestInfo.phone;
-  
+
       if (!name || !email || !phone) {
         alert("Error: Faltan datos para confirmar la cita.");
         return;
       }
+
       appointmentData = {
         hairdresser: selectedHairdresser,
         service: selectedService,
         date: formattedDate,
         time: selectedTime,
-         guestInfo: {
-            name,
-            email,
-            phone,
-         },
-         isAuthenticated: false,
-         onSuccess,
-         onError
-      }
+        guestInfo: { name, email, phone },
+        isAuthenticated: false,
+        onSuccess,
+        onError
+      };
     }
 
     console.log("Enviando datos de la cita:", appointmentData);
     BookAppointment(appointmentData);
-    
   };
 
   return (
     <div className="appointment-container">
       <header className="appointment-header">
-        <h1>RESERVA TU CITA</h1>
+        <h1>Reserva tu Cita</h1>
       </header>
 
       <section className="appointment-form-container">
         {step === 1 && <Appointment1 handleNext={handleNext} />}
         {step === 2 && <Calen onSelectDate={handleDateSelect} />}
-        {step === 3 &&
-          (isAuthenticated ? (
+        {step === 3 && (
+          isAuthenticated ? (
             <button onClick={() => handleConfirmAppointment()}>Confirmar Cita</button>
           ) : (
             <GuestInfo onConfirm={handleGuestConfirm} />
-          ))}
+          )
+        )}
         {step === 4 && (
-        <div className="confirmation-message">
-          <h2>¡Cita Reservada!</h2>
-          <p>{confirmationMessage}</p>
-          <button onClick={() => setStep(1)}>Reservar otra cita</button>
-        </div>
+          <div className="confirmation-message">
+            <h2>¡Cita Confirmada!</h2>
+            <p>{confirmationMessage}</p>
+            <button onClick={() => setStep(1)}>Reservar otra cita</button>
+          </div>
         )}
       </section>
     </div>

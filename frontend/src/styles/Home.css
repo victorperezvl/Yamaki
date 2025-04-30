@@ -1,44 +1,62 @@
-  .home-container {
+/* Aseguramos que el contenido esté justo debajo de la barra de navegación sin margen extra */
+.home-container {
   position: relative;
   width: 100%;
   height: 100vh;
-  }
+  margin-top: 0; /* Sin margen superior adicional */
+  overflow: hidden; /* Para evitar que el contenido se desborde */
+}
 
-  .menu-container {
-    display: flex;
-    align-items: center;
-    margin-left: auto; 
-    gap: 15px; 
-  }
-  
-  .user-icon {
-    width: 40px; 
-    height: 40px;
-    cursor: pointer;
-  }
+/* Contenedor principal con fondo */
+.home-content {
+  position: relative;
+  height: 100%;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  text-align: center;
+  padding-top: 80px; /* Aseguramos que el contenido no se superponga con la barra */
+}
 
-  .homeImg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    position: absolute;
-    z-index: 1;
-  }
+/* Título principal con diseño moderno */
+.homeTxt {
+  font-size: 4rem; /* Tamaño grande para el título */
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-family: 'Roboto', sans-serif;
+  color: #fff;
+  z-index: 2;
+  margin: 0;
+  padding-bottom: 20px;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7); /* Sombra suave para mejorar visibilidad */
+}
 
-  .homeTxt {
-    position: absolute;
-    top: 10%;
-    right: 5%;
-    color: white;
-    font-size: 70px;
-    font-weight: bold;
-    font-family: 'Roboto', sans-serif;
-    z-index: 2;
+/* Imagen de fondo ajustada al contenedor */
+.homeImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1; /* La imagen debe estar detrás del texto */
+}
+
+/* Animación de aparición para el contenido */
+.home-content {
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Efecto de transición para el fadeIn */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  .user-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
+  to {
+    opacity: 1;
   }
-  
+}

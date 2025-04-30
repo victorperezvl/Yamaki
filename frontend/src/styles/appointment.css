@@ -3,37 +3,129 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-
-/* Barra roja superior */
-.appointment-header {
-    background-color: #8B0000;
-    height: 3cm; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
-/* Sección con fondo negro */
-.appointment-form-container {
-    background-color: black;
-    height: calc(100vh - 3cm); /* Resta la altura de la barra roja */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1;
-    color: white;
-}
-
-.appointment-select {
-    padding: 20px;
-    border-radius: 10px;
-    position: relative; 
-    z-index: 2; 
-    text-align: center;
+    font-family: 'Poppins', sans-serif; /* Fuente moderna y limpia */
   }
+  
+  /* Barra roja superior */
+  .appointment-header {
+    background-color: #e63946; /* Rojo más moderno */
+    height: 80px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 32px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Sección con fondo negro */
+  .appointment-form-container {
+    background-color: #111; /* Fondo más oscuro para contraste */
+    height: calc(100vh - 80px); /* Ajusta el alto para que no se superponga con la barra */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    padding: 20px;
+    font-size: 18px;
+  }
+  
+  /* Contenedor del formulario */
+  .appointment-select {
+    padding: 40px;
+    border-radius: 15px;
+    background-color: #1d1d1d; /* Fondo más oscuro */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); /* Sombra suave para profundidad */
+    max-width: 800px;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+  }
+  
+  .appointment-select h2 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #e63946; /* Título con color rojo moderno */
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+  }
+  
+  /* Botones estilizados */
+  button {
+    background-color: #e63946; /* Color rojo para los botones */
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #d62c2c;
+    transform: scale(1.05); /* Efecto de aumento al pasar el ratón */
+  }
+  
+  /* Estilos para la confirmación */
+  .confirmation-message {
+    text-align: center;
+    padding: 30px;
+    background-color: #1d1d1d;
+    border-radius: 15px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+  
+  .confirmation-message h2 {
+    font-size: 3rem;
+    color: #e63946;
+    margin-bottom: 10px;
+  }
+  
+  .confirmation-message p {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilo de los campos de selección (desplegables y inputs) */
+  select, input {
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+    border: 2px solid #e63946;
+    background-color: #111;
+    color: white;
+    width: 100%;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease;
+  }
+  
+  select:focus, input:focus {
+    border-color: #f1faee; /* Color más claro cuando se enfoca */
+    outline: none;
+  }
+  
+  /* Estilos para los pasos del formulario */
+  .step-container {
+    margin-top: 20px;
+  }
+  
+  .step-container h3 {
+    font-size: 2rem;
+    color: #fff;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+  
+  .step-container p {
+    font-size: 1.2rem;
+    color: #aaa;
+  }
+  
