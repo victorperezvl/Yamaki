@@ -13,4 +13,4 @@ Tecnologías:
   - Backend: Node.js, Express, MySQL
   - Autenticación: JWT
   - DB: MySQL2
-  - Frontend (próximamente): React
+  - Frontend: React
