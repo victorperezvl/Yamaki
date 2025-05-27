@@ -1,4 +1,4 @@
-/* Reset básico */
+
 * {
     margin: 0;
     padding: 0;
@@ -6,7 +6,7 @@
     font-family: Arial, sans-serif;
 }
 
-/* Contenedor principal */
+
 .services-container {
     text-align: center;
     background-color: black;
@@ -15,27 +15,26 @@
     flex-direction: column;
 }
 
-/* Barra roja superior para el título */
+
 .services-header {
-    background-color: #8B0000; /* Rojo oscuro */
+    background-color: #8B0000; 
     height: 3cm; 
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-/* Asegura que el título de la barra roja sea visible */
 .services-header h1 {
-    font-size: 40px; /* Ajuste para mejor visibilidad */
+    font-size: 40px; 
     font-weight: bold;
     text-transform: uppercase;
     white-space: nowrap;
-    color: white !important; /* Asegura que el texto sea blanco */
+    color: white !important; 
     position: relative;
     z-index: 10;
 }
 
-/* Lista de servicios */
+
 .services-list {
     display: flex;
     flex-direction: column;
@@ -45,9 +44,8 @@
     gap: 20px;
 }
 
-/* Cada servicio */
 .service-item {
-    font-size: 36px; /* Ajustado para mejor equilibrio */
+    font-size: 36px; 
     font-weight: bold;
     background-color: white;
     padding: 20px 50px;
@@ -61,13 +59,13 @@
     color: black;
 }
 
-/* Nombre del servicio */
+
 .service-name {
     flex: 1;
     text-align: left;
 }
 
-/* Precio en rojo */
+
 .service-price {
     color: #d32f2f;
     font-weight: bold;
@@ -77,7 +75,7 @@
     font-size: 40px;
     font-weight: bold;
     text-transform: uppercase;
-    color: white; /* Asegura que el texto sea blanco */
+    color: white; 
     text-align: center;
     margin-top: 20px;
     position: relative;

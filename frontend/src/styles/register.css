@@ -1,11 +1,11 @@
 .register-container {
     width: 320px;
-    margin: 80px auto 20px; /* Aumentamos el margen superior */
+    margin: 80px auto 20px; 
     text-align: center;
     padding: 20px;
     border-radius: 8px;
-    background-color: #fff; /* Opcional: para darle un fondo */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Opcional: sombrita para destacar */
+    background-color: #fff; 
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
   }
   
   .register-container input {

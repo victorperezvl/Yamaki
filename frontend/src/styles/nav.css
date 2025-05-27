@@ -1,27 +1,25 @@
-/* Resetear márgenes y padding de todos los elementos */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* General Nav Bar Styling */
+
 .nav {
-  background-color: #333; /* Color de fondo de la barra */
+  background-color: #333; 
   display: flex;
   justify-content: space-between;
   padding: 15px 30px;
   align-items: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para darle un efecto elevado */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100; /* Asegura que la barra esté encima de otros elementos */
-  font-family: 'Poppins', sans-serif; /* Fuente moderna */
+  z-index: 100; 
+  font-family: 'Poppins', sans-serif; 
 }
 
-/* Logo */
 .logo {
   font-size: 1.8rem;
   color: #fff;
@@ -30,14 +28,12 @@
   font-family: 'Poppins', sans-serif;
 }
 
-/* Contenedor del menú */
 .menu-container {
   display: flex;
   align-items: center;
   gap: 15px;
 }
 
-/* Menú de navegación */
 .menu {
   display: flex;
   gap: 20px;
@@ -59,7 +55,6 @@
   border-radius: 5px;
 }
 
-/* Estilo del botón de usuario */
 .user-btn {
   background: none;
   border: none;
@@ -72,13 +67,11 @@
   border-radius: 50%;
 }
 
-/* Solucionar el problema de la superposición y el espacio blanco */
 body {
-  margin-top: 0; /* Elimina cualquier margen superior */
+  margin-top: 0; 
   
 }
 
-/* Estilos responsivos para pantallas pequeñas */
 @media (max-width: 768px) {
   .menu {
     display: none;

@@ -2,11 +2,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif; /* Fuente moderna y limpia */
+    font-family: 'Poppins', sans-serif; 
   }
   
   .appointment-header {
-    background-color: #e63946; /* Rojo más moderno */
+    background-color: #e63946; 
     height: 80px; 
     display: flex;
     align-items: center;
@@ -21,8 +21,8 @@
   
  
   .appointment-form-container {
-    background-color: #111; /* Fondo más oscuro para contraste */
-    height: calc(100vh - 80px); /* Ajusta el alto para que no se superponga con la barra */
+    background-color: #111; 
+    height: calc(100vh - 80px); 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -31,12 +31,11 @@
     font-size: 18px;
   }
   
-  /* Contenedor del formulario */
   .appointment-select {
     padding: 40px;
     border-radius: 15px;
-    background-color: #1d1d1d; /* Fondo más oscuro */
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); /* Sombra suave para profundidad */
+    background-color: #1d1d1d; 
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); 
     max-width: 800px;
     width: 100%;
     text-align: center;
@@ -46,14 +45,13 @@
   .appointment-select h2 {
     font-size: 2.5rem;
     font-weight: 600;
-    color: #e63946; /* Título con color rojo moderno */
+    color: #e63946; 
     margin-bottom: 20px;
     letter-spacing: 1px;
   }
   
-  /* Botones estilizados */
   button {
-    background-color: #e63946; /* Color rojo para los botones */
+    background-color: #e63946; 
     color: white;
     padding: 15px 30px;
     border: none;
@@ -67,10 +65,9 @@
   
   button:hover {
     background-color: #d62c2c;
-    transform: scale(1.05); /* Efecto de aumento al pasar el ratón */
+    transform: scale(1.05); 
   }
   
-  /* Estilos para la confirmación */
   .confirmation-message {
     text-align: center;
     padding: 30px;
@@ -92,7 +89,6 @@
     margin-bottom: 20px;
   }
   
-  /* Estilo de los campos de selección (desplegables y inputs) */
   select, input {
     padding: 12px;
     border-radius: 8px;
@@ -106,11 +102,10 @@
   }
   
   select:focus, input:focus {
-    border-color: #f1faee; /* Color más claro cuando se enfoca */
+    border-color: #f1faee; 
     outline: none;
   }
   
-  /* Estilos para los pasos del formulario */
   .step-container {
     margin-top: 20px;
   }
