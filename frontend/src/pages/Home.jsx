@@ -1,5 +1,5 @@
 import "../styles/Home.css";
-import homeImg from "../assets/peluqueria.png";
+import homeImg from "../assets/peluqueria.webp";
 
 // Home page
 const Home = () => {
